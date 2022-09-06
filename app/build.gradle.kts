@@ -60,4 +60,6 @@ dependencies {
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    implementation(files("libs/libStreamSDK_v1.2.0.jar"))
 }
