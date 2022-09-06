@@ -1,10 +1,14 @@
 package dev.yjyoon.neurosky.ui.splash
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.MaterialTheme
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,14 +17,23 @@ import dev.yjyoon.neurosky.ui.main.MainActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@SuppressLint("CustomSplashScreen")
 @AndroidEntryPoint
 class SplashActivity : BaseActivity() {
+
+    private val permissionsRequestActivityLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            val granted = permissions.entries.all { it.value }
+            if (granted) {
+                startMainActivity()
+            } else {
+                finish()
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        requestBluetoothPermissions()
-        
         setContent {
             val systemUiController = rememberSystemUiController()
             systemUiController.setSystemBarsColor(MaterialTheme.colorScheme.background)
@@ -30,22 +43,23 @@ class SplashActivity : BaseActivity() {
 
         lifecycleScope.launch {
             delay(SPLASH_TIME_MILLIS)
-            startMainActivity()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (!hasPermissions(BLUETOOTH_PERMISSIONS)) {
+                    permissionsRequestActivityLauncher.launch(BLUETOOTH_PERMISSIONS)
+                } else {
+                    startMainActivity()
+                }
+            } else {
+                startMainActivity()
+            }
         }
     }
 
-    private fun requestBluetoothPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.BLUETOOTH,
-                    Manifest.permission.BLUETOOTH_SCAN,
-                    Manifest.permission.BLUETOOTH_CONNECT
-                ), 1
-            )
-        } else {
-            requestPermissions(arrayOf(Manifest.permission.BLUETOOTH), 1)
-        }
+    private fun hasPermissions(permissions: Array<String>): Boolean = permissions.all {
+        ActivityCompat.checkSelfPermission(
+            this,
+            it
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun startMainActivity() {
@@ -55,5 +69,11 @@ class SplashActivity : BaseActivity() {
 
     companion object {
         private const val SPLASH_TIME_MILLIS = 1_500L
+
+        private val BLUETOOTH_PERMISSIONS = arrayOf(
+            Manifest.permission.BLUETOOTH_SCAN,
+            Manifest.permission.BLUETOOTH_CONNECT,
+            Manifest.permission.BLUETOOTH_ADVERTISE
+        )
     }
 }
