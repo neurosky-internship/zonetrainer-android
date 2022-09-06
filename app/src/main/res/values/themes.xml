@@ -2,4 +2,10 @@
 <resources>
 
     <style name="Theme.Neurosky" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="Theme.Neurosky.Splash" parent="Theme.Neurosky">
+        <item name="android:statusBarColor">@color/background</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:navigationBarColor">@color/background</item>
+    </style>
 </resources>
