@@ -6,11 +6,11 @@ import androidx.activity.ComponentActivity
 
 abstract class BaseActivity : ComponentActivity() {
 
-    protected inline val TAG: String get () = this::class.java.simpleName
+    protected inline val TAG: String get() = this::class.java.simpleName
 
     protected open fun handleException(throwable: Throwable) {
         showToast(throwable.message ?: "Unknown error")
-        Log.e(TAG, throwable.stackTrace.toString())
+        Log.e(TAG, throwable.stackTraceToString())
         finish()
     }
 
