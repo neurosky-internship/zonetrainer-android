@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
+    id("dagger.hilt.android.plugin")
     kotlin("android")
+    kotlin("kapt")
 }
 
 android {
@@ -55,4 +57,7 @@ dependencies {
     implementation(libs.bundles.compose)
 
     implementation(libs.google.accompanist.systemuicontroller)
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 }
