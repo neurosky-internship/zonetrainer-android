@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Neurosky"
-include ':app'
+include(":app")
