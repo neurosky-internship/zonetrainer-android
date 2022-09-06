@@ -19,15 +19,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val bluetoothManager =
-            this@MainActivity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
-
-        val bluetoothAdapter: BluetoothAdapter? = bluetoothManager.adapter
-        if (bluetoothAdapter != null && bluetoothAdapter.isEnabled) {
-            viewModel.onBluetoothEnabled(bluetoothAdapter)
-        } else {
-            viewModel.onBluetoothDisabled()
-        }
+        getBluetoothAdapter()
 
         setContent {
             NeuroskyTheme {
@@ -41,6 +33,17 @@ class MainActivity : ComponentActivity() {
         viewModel.closeTgStreamReader()
     }
 
+    private fun getBluetoothAdapter() {
+        val bluetoothManager =
+            this@MainActivity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        val bluetoothAdapter: BluetoothAdapter? = bluetoothManager.adapter
+
+        if (bluetoothAdapter != null && bluetoothAdapter.isEnabled) {
+            viewModel.onBluetoothEnabled(bluetoothAdapter)
+        } else {
+            viewModel.onBluetoothDisabled()
+        }
+    }
 
     companion object {
         fun startActivity(context: Context) {
