@@ -43,19 +43,32 @@ class SplashActivity : BaseActivity() {
 
         lifecycleScope.launch {
             delay(SPLASH_TIME_MILLIS)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                if (!hasPermissions(BLUETOOTH_PERMISSIONS)) {
-                    permissionsRequestActivityLauncher.launch(BLUETOOTH_PERMISSIONS)
-                } else {
-                    startMainActivity()
-                }
+            requestPermissions()
+        }
+    }
+
+    private fun requestPermissions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val permissions = BLUETOOTH_PERMISSIONS + CAMERA_PERMISSION
+            if (!hasPermissions(permissions)) {
+                permissionsRequestActivityLauncher.launch(permissions.toTypedArray())
+            } else {
+                startMainActivity()
+            }
+        } else {
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    CAMERA_PERMISSION
+                ) == PackageManager.PERMISSION_DENIED
+            ) {
+                permissionsRequestActivityLauncher.launch(arrayOf(CAMERA_PERMISSION))
             } else {
                 startMainActivity()
             }
         }
     }
 
-    private fun hasPermissions(permissions: Array<String>): Boolean = permissions.all {
+    private fun hasPermissions(permissions: List<String>): Boolean = permissions.all {
         ActivityCompat.checkSelfPermission(
             this,
             it
@@ -70,7 +83,9 @@ class SplashActivity : BaseActivity() {
     companion object {
         private const val SPLASH_TIME_MILLIS = 1_500L
 
-        private val BLUETOOTH_PERMISSIONS = arrayOf(
+        private const val CAMERA_PERMISSION = Manifest.permission.CAMERA
+
+        private val BLUETOOTH_PERMISSIONS = listOf(
             Manifest.permission.BLUETOOTH_SCAN,
             Manifest.permission.BLUETOOTH_CONNECT,
             Manifest.permission.BLUETOOTH_ADVERTISE

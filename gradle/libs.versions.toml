@@ -21,6 +21,8 @@ okhttp = "4.10.0"
 retrofit = "2.9.0"
 gson = "2.9.0"
 
+camerax = "1.1.0"
+
 desugar = "1.1.5"
 junit = "4.13.2"
 
@@ -45,6 +47,11 @@ androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.0.0" }
+
+# CameraX
+androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "camerax" }
+androidx-camera-lifecycle = { module = "androidx.camera:camera-lifecycle", version.ref = "camerax" }
+androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "camerax" }
 
 # Accompanist
 google-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
@@ -87,4 +94,10 @@ compose = [
     "androidx-activity-compose",
     "androidx-compose-navigation",
     "androidx-hilt-navigation-compose"
+]
+
+camerax = [
+    "androidx-camera-camera2",
+    "androidx-camera-lifecycle",
+    "androidx-camera-view"
 ]
