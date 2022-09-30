@@ -9,6 +9,7 @@ androidx-activity = "1.5.1"
 androidx-navigation = "2.5.1"
 
 compose = "1.2.0"
+material = "1.2.1"
 material3 = "1.0.0-beta01"
 accompanist = "0.25.1"
 
@@ -46,6 +47,7 @@ androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-
 androidx-compose-ui-core = { module = "androidx.compose.ui:ui", version.ref = "compose" }
 androidx-compose-ui-tooling-core = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material" }
 androidx-compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
 androidx-compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "androidx-navigation" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version = "1.0.0" }
@@ -96,6 +98,7 @@ compose = [
     "androidx-compose-ui-core",
     "androidx-compose-ui-tooling-core",
     "androidx-compose-ui-tooling-preview",
+    "androidx-compose-material-icons-extended",
     "androidx-compose-material3",
     "androidx-activity-compose",
     "androidx-compose-navigation",
