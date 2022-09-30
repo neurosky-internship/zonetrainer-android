@@ -15,7 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.neurosky.zonetrainer.R
-import com.neurosky.zonetrainer.ui.theme.NeuroskyTheme
+import com.neurosky.zonetrainer.ui.theme.NeuroTheme
 
 @Composable
 fun SplashScreen() {
@@ -47,7 +47,7 @@ fun SplashScreen() {
 @Preview
 @Composable
 private fun SplashScreenPreview() {
-    NeuroskyTheme {
+    NeuroTheme {
         SplashScreen()
     }
 }

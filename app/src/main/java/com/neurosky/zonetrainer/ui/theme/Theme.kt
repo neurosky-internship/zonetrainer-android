@@ -24,7 +24,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun NeuroskyTheme(
+fun NeuroTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
