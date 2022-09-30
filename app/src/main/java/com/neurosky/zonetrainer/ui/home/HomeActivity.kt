@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.neurosky.zonetrainer.ui.base.BaseActivity
+import com.neurosky.zonetrainer.ui.main.MainActivity
 import com.neurosky.zonetrainer.ui.theme.NeuroTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,9 +20,16 @@ class HomeActivity : BaseActivity() {
 
         setContent {
             NeuroTheme {
-                HomeScreen(viewModel)
+                HomeScreen(
+                    viewModel = viewModel,
+                    navigateToNeuro = ::startMainActivity
+                )
             }
         }
+    }
+
+    private fun startMainActivity() {
+        MainActivity.startActivity(this)
     }
 
     companion object {

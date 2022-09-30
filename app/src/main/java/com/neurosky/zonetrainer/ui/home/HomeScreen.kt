@@ -9,7 +9,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.FloatingActionButtonDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
@@ -24,16 +29,26 @@ import com.neurosky.zonetrainer.R
 import com.neurosky.zonetrainer.ui.component.NeuroChart
 import com.neurosky.zonetrainer.ui.component.RecentCard
 import com.neurosky.zonetrainer.ui.theme.NeuroBlue
+import com.neurosky.zonetrainer.ui.theme.NeuroBlueLight
 import com.neurosky.zonetrainer.ui.theme.NeuroPurple
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+fun HomeScreen(
+    viewModel: HomeViewModel,
+    navigateToNeuro: () -> Unit
+) {
     val uiState by viewModel.uiState.collectAsState()
-    HomeScreen(uiState)
+    HomeScreen(
+        uiState = uiState,
+        navigateToNeuro = navigateToNeuro
+    )
 }
 
 @Composable
-fun HomeScreen(uiState: HomeUiState) {
+fun HomeScreen(
+    uiState: HomeUiState,
+    navigateToNeuro: () -> Unit
+) {
     when (uiState) {
         HomeUiState.Loading -> {
             //TODO: Loading Component
@@ -46,7 +61,8 @@ fun HomeScreen(uiState: HomeUiState) {
                 recentAttention = uiState.data.recentAttention,
                 recentMeditation = uiState.data.recentMeditation,
                 attentionChart = uiState.data.attentionChart,
-                meditationChart = uiState.data.meditationChart
+                meditationChart = uiState.data.meditationChart,
+                navigateToNeuro = navigateToNeuro
             )
         }
     }
@@ -58,7 +74,8 @@ fun HomeContent(
     recentAttention: HomeData.RecentData,
     recentMeditation: HomeData.RecentData,
     attentionChart: HomeData.ChartData,
-    meditationChart: HomeData.ChartData
+    meditationChart: HomeData.ChartData,
+    navigateToNeuro: () -> Unit
 ) {
     val scrollState = rememberScrollState()
 
@@ -73,6 +90,16 @@ fun HomeContent(
                     )
                 }
             )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = navigateToNeuro,
+                containerColor = NeuroBlueLight,
+                contentColor = NeuroBlue,
+                elevation = FloatingActionButtonDefaults.elevation(defaultElevation = 4.dp)
+            ) {
+                Icon(imageVector = Icons.Rounded.PlayArrow, contentDescription = null)
+            }
         }
     ) { innerPadding ->
         Column(
@@ -105,6 +132,7 @@ fun HomeContent(
             NeuroChart(data = attentionChart, color = NeuroPurple)
             Spacer(Modifier.height(48.dp))
             NeuroChart(data = meditationChart, color = NeuroBlue)
+            Spacer(Modifier.height(48.dp))
         }
     }
 }
