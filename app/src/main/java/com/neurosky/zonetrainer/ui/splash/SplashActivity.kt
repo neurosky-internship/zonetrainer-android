@@ -7,13 +7,12 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material3.MaterialTheme
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import dagger.hilt.android.AndroidEntryPoint
 import com.neurosky.zonetrainer.ui.base.BaseActivity
-import com.neurosky.zonetrainer.ui.main.MainActivity
+import com.neurosky.zonetrainer.ui.home.HomeActivity
+import com.neurosky.zonetrainer.ui.theme.NeuroTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -25,7 +24,7 @@ class SplashActivity : BaseActivity() {
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             val granted = permissions.entries.all { it.value }
             if (granted) {
-                startMainActivity()
+                startHomeActivity()
             } else {
                 finish()
             }
@@ -35,10 +34,9 @@ class SplashActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val systemUiController = rememberSystemUiController()
-            systemUiController.setSystemBarsColor(MaterialTheme.colorScheme.background)
-
-            SplashScreen()
+            NeuroTheme {
+                SplashScreen()
+            }
         }
 
         lifecycleScope.launch {
@@ -53,7 +51,7 @@ class SplashActivity : BaseActivity() {
             if (!hasPermissions(permissions)) {
                 permissionsRequestActivityLauncher.launch(permissions.toTypedArray())
             } else {
-                startMainActivity()
+                startHomeActivity()
             }
         } else {
             if (ActivityCompat.checkSelfPermission(
@@ -63,7 +61,7 @@ class SplashActivity : BaseActivity() {
             ) {
                 permissionsRequestActivityLauncher.launch(arrayOf(CAMERA_PERMISSION))
             } else {
-                startMainActivity()
+                startHomeActivity()
             }
         }
     }
@@ -75,8 +73,8 @@ class SplashActivity : BaseActivity() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun startMainActivity() {
-        MainActivity.startActivity(this)
+    private fun startHomeActivity() {
+        HomeActivity.startActivity(this)
         finish()
     }
 
