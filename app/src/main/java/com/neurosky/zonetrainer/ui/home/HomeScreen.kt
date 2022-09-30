@@ -83,16 +83,12 @@ fun HomeContent(
                 modifier = Modifier.padding(4.dp)
             ) {
                 RecentCard(
-                    title = stringResource(id = recentAttention.type.stringRes),
-                    datetime = recentAttention.datetime,
-                    value = recentAttention.value,
+                    data = recentAttention,
                     modifier = Modifier.weight(1f)
                 )
                 Spacer(Modifier.width(18.dp))
                 RecentCard(
-                    title = stringResource(id = recentMeditation.type.stringRes),
-                    datetime = recentMeditation.datetime,
-                    value = recentMeditation.value,
+                    data = recentMeditation,
                     modifier = Modifier.weight(1f)
                 )
             }

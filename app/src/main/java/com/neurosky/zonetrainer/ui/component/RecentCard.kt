@@ -19,22 +19,20 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.neurosky.zonetrainer.R
+import com.neurosky.zonetrainer.ui.home.HomeData
 import com.neurosky.zonetrainer.ui.theme.Grey
 import com.neurosky.zonetrainer.ui.theme.NeuroGreen
 import com.neurosky.zonetrainer.ui.theme.NeuroRed
 import com.neurosky.zonetrainer.ui.theme.White
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun RecentCard(
-    title: String,
-    datetime: LocalDateTime,
-    value: Int,
+    data: HomeData.RecentData,
     boundaryValue: Int = 50,
     modifier: Modifier = Modifier
 ) {
-    val isGood = value >= boundaryValue
+    val isGood = data.value >= boundaryValue
     val color = if (isGood) NeuroGreen else NeuroRed
 
     Surface(
@@ -48,11 +46,14 @@ fun RecentCard(
                 .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 0.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = title, style = MaterialTheme.typography.titleLarge)
+            Text(
+                text = stringResource(id = data.type.stringRes),
+                style = MaterialTheme.typography.titleLarge
+            )
             Spacer(Modifier.height(4.dp))
             Text(
                 text = "${stringResource(id = R.string.today_at)} ${
-                    datetime.format(
+                    data.datetime.format(
                         DateTimeFormatter.ofPattern(stringResource(id = R.string.recent_time_fmt))
                     )
                 }",
@@ -68,7 +69,7 @@ fun RecentCard(
                     shape = RoundedCornerShape(48.dp),
                     modifier = Modifier
                         .width(72.dp)
-                        .height(28.dp)
+                        .height(32.dp)
                 ) {
                     Box(
                         modifier = Modifier.fillMaxSize(),
