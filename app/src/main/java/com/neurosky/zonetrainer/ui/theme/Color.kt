@@ -3,6 +3,7 @@ package com.neurosky.zonetrainer.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val NeuroBlue = Color(0xFF3AA2E3)
+val NeuroBlueLight = Color(0xFFD7EBF7)
 val NeuroPurple = Color(0xFF6464D0)
 val NeuroGreen = Color(0xFF1FBF89)
 val NeuroRed = Color(0xFFFF6D6D)
