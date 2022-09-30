@@ -43,12 +43,13 @@ fun RecentCard(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 0.dp),
+                .padding(start = 24.dp, top = 24.dp, end = 24.dp, bottom = 8.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = stringResource(id = data.type.stringRes),
-                style = MaterialTheme.typography.titleLarge
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 1
             )
             Spacer(Modifier.height(4.dp))
             Text(

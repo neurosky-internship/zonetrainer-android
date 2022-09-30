@@ -115,14 +115,12 @@ fun HomeContent(
                 modifier = Modifier.padding(bottom = 12.dp)
             )
             Spacer(Modifier.height(12.dp))
-            Row(
-                modifier = Modifier.padding(4.dp)
-            ) {
+            Row {
                 RecentCard(
                     data = recentAttention,
                     modifier = Modifier.weight(1f)
                 )
-                Spacer(Modifier.width(18.dp))
+                Spacer(Modifier.width(12.dp))
                 RecentCard(
                     data = recentMeditation,
                     modifier = Modifier.weight(1f)
