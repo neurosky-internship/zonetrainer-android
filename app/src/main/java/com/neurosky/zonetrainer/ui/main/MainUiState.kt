@@ -1,4 +1,4 @@
-package dev.yjyoon.neurosky.ui.main
+package com.neurosky.zonetrainer.ui.main
 
 sealed interface MainUiState {
     object Unconnected : MainUiState

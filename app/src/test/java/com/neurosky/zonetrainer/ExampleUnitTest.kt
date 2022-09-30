@@ -1,4 +1,4 @@
-package dev.yjyoon.neurosky
+package com.neurosky.zonetrainer
 
 import org.junit.Test
 

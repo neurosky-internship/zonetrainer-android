@@ -1,4 +1,4 @@
-package dev.yjyoon.neurosky.ui.main
+package com.neurosky.zonetrainer.ui.main
 
 import android.content.Context
 import androidx.camera.core.CameraSelector

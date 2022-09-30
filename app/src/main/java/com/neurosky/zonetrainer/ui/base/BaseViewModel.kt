@@ -1,4 +1,4 @@
-package dev.yjyoon.neurosky.ui.base
+package com.neurosky.zonetrainer.ui.base
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "dev.yjyoon.neurosky"
+    namespace = "com.neurosky.zonetrainer"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "dev.yjyoon.neurosky"
+        applicationId = "com.neurosky.zonetrainer"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

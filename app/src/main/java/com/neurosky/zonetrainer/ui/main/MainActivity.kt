@@ -1,4 +1,4 @@
-package dev.yjyoon.neurosky.ui.main
+package com.neurosky.zonetrainer.ui.main
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
@@ -9,7 +9,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import dagger.hilt.android.AndroidEntryPoint
-import dev.yjyoon.neurosky.ui.theme.NeuroskyTheme
+import com.neurosky.zonetrainer.ui.theme.NeuroskyTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
