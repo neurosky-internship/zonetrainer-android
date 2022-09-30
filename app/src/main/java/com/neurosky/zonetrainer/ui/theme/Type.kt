@@ -18,15 +18,22 @@ val Typography = Typography(
     headlineLarge = TextStyle(
         fontFamily = DmSans,
         fontWeight = FontWeight.Bold,
-        fontSize = 24.sp,
+        fontSize = 28.sp,
         lineHeight = 32.sp,
         letterSpacing = 0.sp
     ),
     titleLarge = TextStyle(
         fontFamily = DmSans,
         fontWeight = FontWeight.Bold,
-        fontSize = 18.sp,
+        fontSize = 20.sp,
         lineHeight = 24.sp,
+        letterSpacing = 0.sp
+    ),
+    bodySmall = TextStyle(
+        fontFamily = DmSans,
+        fontWeight = FontWeight.Medium,
+        fontSize = 12.sp,
+        lineHeight = 12.sp,
         letterSpacing = 0.sp
     )
 )
