@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -20,7 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.neurosky.zonetrainer.R
+import com.neurosky.zonetrainer.ui.component.NeuroChart
 import com.neurosky.zonetrainer.ui.component.RecentCard
+import com.neurosky.zonetrainer.ui.theme.NeuroBlue
+import com.neurosky.zonetrainer.ui.theme.NeuroPurple
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel) {
@@ -40,7 +44,9 @@ fun HomeScreen(uiState: HomeUiState) {
         is HomeUiState.Success -> {
             HomeContent(
                 recentAttention = uiState.data.recentAttention,
-                recentMeditation = uiState.data.recentMeditation
+                recentMeditation = uiState.data.recentMeditation,
+                attentionChart = uiState.data.attentionChart,
+                meditationChart = uiState.data.meditationChart
             )
         }
     }
@@ -50,7 +56,9 @@ fun HomeScreen(uiState: HomeUiState) {
 @Composable
 fun HomeContent(
     recentAttention: HomeData.RecentData,
-    recentMeditation: HomeData.RecentData
+    recentMeditation: HomeData.RecentData,
+    attentionChart: HomeData.ChartData,
+    meditationChart: HomeData.ChartData
 ) {
     val scrollState = rememberScrollState()
 
@@ -79,6 +87,7 @@ fun HomeContent(
                 style = MaterialTheme.typography.titleLarge,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
+            Spacer(Modifier.height(12.dp))
             Row(
                 modifier = Modifier.padding(4.dp)
             ) {
@@ -92,6 +101,10 @@ fun HomeContent(
                     modifier = Modifier.weight(1f)
                 )
             }
+            Spacer(Modifier.height(48.dp))
+            NeuroChart(data = attentionChart, color = NeuroPurple)
+            Spacer(Modifier.height(48.dp))
+            NeuroChart(data = meditationChart, color = NeuroBlue)
         }
     }
 }
