@@ -1,4 +1,4 @@
-package dev.yjyoon.neurosky.util
+package com.neurosky.zonetrainer.util
 
 import android.util.Log
 import com.neurosky.connection.ConnectionStates

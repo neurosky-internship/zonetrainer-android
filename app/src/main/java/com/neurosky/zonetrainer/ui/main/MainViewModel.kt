@@ -1,10 +1,10 @@
-package dev.yjyoon.neurosky.ui.main
+package com.neurosky.zonetrainer.ui.main
 
 import android.bluetooth.BluetoothAdapter
 import androidx.lifecycle.ViewModel
 import com.neurosky.connection.TgStreamReader
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.yjyoon.neurosky.util.TgStreamHandlerImpl
+import com.neurosky.zonetrainer.util.TgStreamHandlerImpl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

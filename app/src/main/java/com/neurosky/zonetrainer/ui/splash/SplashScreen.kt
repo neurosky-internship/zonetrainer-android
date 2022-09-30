@@ -1,4 +1,4 @@
-package dev.yjyoon.neurosky.ui.splash
+package com.neurosky.zonetrainer.ui.splash
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

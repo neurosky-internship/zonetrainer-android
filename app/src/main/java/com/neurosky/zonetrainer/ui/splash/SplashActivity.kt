@@ -1,4 +1,4 @@
-package dev.yjyoon.neurosky.ui.splash
+package com.neurosky.zonetrainer.ui.splash
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -12,8 +12,8 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
-import dev.yjyoon.neurosky.ui.base.BaseActivity
-import dev.yjyoon.neurosky.ui.main.MainActivity
+import com.neurosky.zonetrainer.ui.base.BaseActivity
+import com.neurosky.zonetrainer.ui.main.MainActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

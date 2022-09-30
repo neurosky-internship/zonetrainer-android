@@ -1,4 +1,4 @@
-package dev.yjyoon.neurosky.ui.theme
+package com.neurosky.zonetrainer.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

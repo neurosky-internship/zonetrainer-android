@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Neurosky"
+rootProject.name = "Zone Trainer"
 include(":app")
