@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Zone Trainer</string>
+
+    <string name="home">Home</string>
+    <string name="recently">Recently</string>
+
+    <string name="attention">Attention</string>
+    <string name="meditation">Meditation</string>
+
+    <string name="today_at">Today at</string>
+    <string name="recent_time_fmt">h:mm a</string>
+
+    <string name="good">GOOD</string>
+    <string name="bad">BAD</string>
+
+    <string name="avg">Avg</string>
+    <string name="max">Max</string>
+    <string name="min">Min</string>
 </resources>

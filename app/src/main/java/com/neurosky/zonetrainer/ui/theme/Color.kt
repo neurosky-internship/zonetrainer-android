@@ -2,10 +2,12 @@ package com.neurosky.zonetrainer.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+val NeuroBlue = Color(0xFF3AA2E3)
+val NeuroBlueLight = Color(0xFFD7EBF7)
+val NeuroPurple = Color(0xFF6464D0)
+val NeuroGreen = Color(0xFF1FBF89)
+val NeuroRed = Color(0xFFFF6D6D)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+val Black = Color(0xFF303437)
+val Grey = Color(0xFF404446)
+val White = Color(0xFFFFFFFF)

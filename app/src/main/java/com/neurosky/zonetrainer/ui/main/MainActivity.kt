@@ -8,8 +8,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import com.neurosky.zonetrainer.ui.theme.NeuroTheme
 import dagger.hilt.android.AndroidEntryPoint
-import com.neurosky.zonetrainer.ui.theme.NeuroskyTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         getBluetoothAdapter()
 
         setContent {
-            NeuroskyTheme {
+            NeuroTheme {
                 MainScreen(viewModel = viewModel)
             }
         }
