@@ -16,4 +16,17 @@
     <string name="avg">Avg</string>
     <string name="max">Max</string>
     <string name="min">Min</string>
+
+    <string name="analysis">Analysis</string>
+
+    <string name="searching_msg">Searching for nearby MindWaves…</string>
+    <string name="optimizing_msg">Optimizing the EEG signal…</string>
+    <string name="disabled_msg">Please turn on the Bluetooth</string>
+
+    <string name="connecting">CONNECTING…</string>
+    <string name="connected">CONNECTED</string>
+    <string name="disconnected">DISCONNECTED</string>
+
+    <string name="cancel">Cancel</string>
+    <string name="back">Back</string>
 </resources>

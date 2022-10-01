@@ -23,7 +23,10 @@ class NeuroActivity : ComponentActivity() {
 
         setContent {
             NeuroTheme {
-                NeuroScreen(viewModel = viewModel)
+                NeuroScreen(
+                    viewModel = viewModel,
+                    closeActivity = ::finish
+                )
             }
         }
     }
