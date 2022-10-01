@@ -10,12 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.neurosky.zonetrainer.ui.home.HomeData
 import com.neurosky.zonetrainer.ui.model.ChartType
+import com.neurosky.zonetrainer.util.getMaxX
 import com.neurosky.zonetrainer.util.marker
 import com.patrykandpatryk.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatryk.vico.compose.axis.vertical.startAxis
@@ -35,6 +37,7 @@ fun NeuroChart(
     modifier: Modifier = Modifier
 ) {
     val chartModelProducer by remember { mutableStateOf(ChartEntryModelProducer(data.avgEntryModel)) }
+    var maxX by remember { mutableStateOf(chartModelProducer.getMaxX()) }
 
     val startAxis = startAxis(
         valueFormatter = { value, _ ->
@@ -85,12 +88,17 @@ fun NeuroChart(
                             chartModelProducer.setEntries(data.minEntryModel)
                         }
                     }
+                    maxX = chartModelProducer.getMaxX()
                 }
             )
         }
         ProvideChartStyle(chartStyle = chartStyle) {
             val lineChart =
-                lineChart(minY = 0f, maxY = 100f, persistentMarkers = mapOf(6f to marker()))
+                lineChart(
+                    minY = 0f,
+                    maxY = 100f,
+                    persistentMarkers = mapOf(maxX to marker())
+                )
             Chart(
                 chart = lineChart,
                 chartModelProducer = chartModelProducer,
