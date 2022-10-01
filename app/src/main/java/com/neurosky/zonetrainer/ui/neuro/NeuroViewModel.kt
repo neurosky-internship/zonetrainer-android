@@ -17,7 +17,7 @@ class NeuroViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow<NeuroUiState>(NeuroUiState.Connecting)
     val uiState: StateFlow<NeuroUiState> = _uiState.asStateFlow()
 
-    private lateinit var tgStreamReader: TgStreamReader
+    private var tgStreamReader: TgStreamReader? = null
 
     fun onBluetoothEnabled(bluetoothAdapter: BluetoothAdapter) {
         tgStreamReader = TgStreamReader(
@@ -25,13 +25,13 @@ class NeuroViewModel @Inject constructor() : ViewModel() {
             TgStreamHandlerImpl(
                 onConnected = {
                     _uiState.value = NeuroUiState.Connected.INIT
-                    tgStreamReader.start()
+                    tgStreamReader!!.start()
                 },
                 onWorking = {
-                    tgStreamReader.startRecordRawData()
+                    tgStreamReader!!.startRecordRawData()
                 },
                 onTimeout = {
-                    tgStreamReader.stopRecordRawData()
+                    tgStreamReader!!.stopRecordRawData()
                     _uiState.value = NeuroUiState.Unconnected
                 },
                 onAttentionReceived = { attention ->
@@ -43,14 +43,14 @@ class NeuroViewModel @Inject constructor() : ViewModel() {
             )
         )
 
-        tgStreamReader.setGetDataTimeOutTime(3)
-        tgStreamReader.startLog()
+        tgStreamReader!!.setGetDataTimeOutTime(3)
+        tgStreamReader!!.startLog()
 
-        if (tgStreamReader.isBTConnected) {
+        if (tgStreamReader!!.isBTConnected) {
             closeTgStreamReader()
         }
 
-        tgStreamReader.connect()
+        tgStreamReader!!.connect()
     }
 
     fun onBluetoothDisabled() {
@@ -58,7 +58,9 @@ class NeuroViewModel @Inject constructor() : ViewModel() {
     }
 
     fun closeTgStreamReader() {
-        tgStreamReader.stop()
-        tgStreamReader.close()
+        if (tgStreamReader != null) {
+            tgStreamReader!!.stop()
+            tgStreamReader!!.close()
+        }
     }
 }
