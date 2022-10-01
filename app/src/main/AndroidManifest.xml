@@ -41,7 +41,7 @@
         </activity>
 
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.neuro.NeuroActivity"
             android:screenOrientation="portrait" />
 
         <activity

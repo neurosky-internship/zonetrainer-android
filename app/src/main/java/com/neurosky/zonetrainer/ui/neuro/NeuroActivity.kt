@@ -1,4 +1,4 @@
-package com.neurosky.zonetrainer.ui.main
+package com.neurosky.zonetrainer.ui.neuro
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
@@ -12,9 +12,9 @@ import com.neurosky.zonetrainer.ui.theme.NeuroTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class NeuroActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: NeuroViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,11 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             NeuroTheme {
-                MainScreen(viewModel = viewModel)
+                NeuroScreen(
+                    viewModel = viewModel,
+                    closeActivity = ::finish,
+                    onRetry = ::getBluetoothAdapter
+                )
             }
         }
     }
@@ -35,7 +39,7 @@ class MainActivity : ComponentActivity() {
 
     private fun getBluetoothAdapter() {
         val bluetoothManager =
-            this@MainActivity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+            this@NeuroActivity.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
         val bluetoothAdapter: BluetoothAdapter? = bluetoothManager.adapter
 
         if (bluetoothAdapter != null && bluetoothAdapter.isEnabled) {
@@ -47,7 +51,7 @@ class MainActivity : ComponentActivity() {
 
     companion object {
         fun startActivity(context: Context) {
-            val intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(context, NeuroActivity::class.java)
             context.startActivity(intent)
         }
     }
