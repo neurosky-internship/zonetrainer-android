@@ -23,7 +23,7 @@ class NeuroActivity : ComponentActivity() {
 
         setContent {
             NeuroTheme {
-                MainScreen(viewModel = viewModel)
+                NeuroScreen(viewModel = viewModel)
             }
         }
     }
