@@ -25,7 +25,8 @@ class NeuroActivity : ComponentActivity() {
             NeuroTheme {
                 NeuroScreen(
                     viewModel = viewModel,
-                    closeActivity = ::finish
+                    closeActivity = ::finish,
+                    onRetry = ::getBluetoothAdapter
                 )
             }
         }

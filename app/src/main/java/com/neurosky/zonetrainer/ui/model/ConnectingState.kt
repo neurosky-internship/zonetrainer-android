@@ -16,7 +16,11 @@ enum class ConnectingState(
         actionStringRes = R.string.cancel
     ),
     Disconnected(
-        displayStringRes = R.string.disabled_msg,
+        displayStringRes = R.string.disconnected_msg,
         actionStringRes = R.string.back
+    ),
+    Disabled(
+        displayStringRes = R.string.disabled_msg,
+        actionStringRes = R.string.retry
     )
 }

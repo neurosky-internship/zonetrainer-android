@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.BluetoothDisabled
 import androidx.compose.material.icons.rounded.HeadsetOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -36,20 +37,23 @@ import com.neurosky.zonetrainer.ui.theme.White
 @Composable
 fun NeuroScreen(
     viewModel: NeuroViewModel,
-    closeActivity: () -> Unit
+    closeActivity: () -> Unit,
+    onRetry: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     NeuroScreen(
         uiState = uiState,
-        closeActivity = closeActivity
+        closeActivity = closeActivity,
+        onRetry = onRetry
     )
 }
 
 @Composable
 fun NeuroScreen(
     uiState: NeuroUiState,
-    closeActivity: () -> Unit
+    closeActivity: () -> Unit,
+    onRetry: () -> Unit
 ) {
     when (uiState) {
         is NeuroUiState.Connected -> {
@@ -61,20 +65,26 @@ fun NeuroScreen(
             } else {
                 ConnectingScreen(
                     state = ConnectingState.Optimizing,
-                    closeActivity = closeActivity
+                    onClickAction = closeActivity
                 )
             }
         }
         NeuroUiState.Connecting -> {
             ConnectingScreen(
                 state = ConnectingState.Searching,
-                closeActivity = closeActivity
+                onClickAction = closeActivity
             )
         }
-        NeuroUiState.Unconnected -> {
+        NeuroUiState.Disconnected -> {
             ConnectingScreen(
                 state = ConnectingState.Disconnected,
-                closeActivity = closeActivity
+                onClickAction = closeActivity
+            )
+        }
+        NeuroUiState.Disabled -> {
+            ConnectingScreen(
+                state = ConnectingState.Disabled,
+                onClickAction = onRetry
             )
         }
     }
@@ -84,7 +94,7 @@ fun NeuroScreen(
 @Composable
 fun ConnectingScreen(
     state: ConnectingState,
-    closeActivity: () -> Unit
+    onClickAction: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -142,6 +152,13 @@ fun ConnectingScreen(
                                     tint = MaterialTheme.colorScheme.primary
                                 )
                             }
+                            ConnectingState.Disabled -> {
+                                Icon(
+                                    imageVector = Icons.Rounded.BluetoothDisabled,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
                         }
                         Text(
                             text = stringResource(id = state.displayStringRes),
@@ -160,7 +177,7 @@ fun ConnectingScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Button(
-                                onClick = closeActivity,
+                                onClick = onClickAction,
                                 colors = ButtonDefaults.buttonColors(
                                     containerColor = White,
                                     contentColor = MaterialTheme.colorScheme.primary

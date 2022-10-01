@@ -21,12 +21,15 @@
 
     <string name="searching_msg">Searching for nearby MindWaves…</string>
     <string name="optimizing_msg">Optimizing the EEG signal…</string>
+    <string name="disconnected_msg">MindWave has been disconnected</string>
     <string name="disabled_msg">Please turn on the Bluetooth</string>
 
     <string name="connecting">CONNECTING…</string>
     <string name="connected">CONNECTED</string>
     <string name="disconnected">DISCONNECTED</string>
+    <string name="disabled">DISABLED</string>
 
     <string name="cancel">Cancel</string>
     <string name="back">Back</string>
+    <string name="retry">Retry</string>
 </resources>

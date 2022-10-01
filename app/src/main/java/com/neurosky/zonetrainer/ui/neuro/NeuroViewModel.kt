@@ -20,6 +20,7 @@ class NeuroViewModel @Inject constructor() : ViewModel() {
     private var tgStreamReader: TgStreamReader? = null
 
     fun onBluetoothEnabled(bluetoothAdapter: BluetoothAdapter) {
+        _uiState.value = NeuroUiState.Connecting
         tgStreamReader = TgStreamReader(
             bluetoothAdapter,
             TgStreamHandlerImpl(
@@ -32,7 +33,7 @@ class NeuroViewModel @Inject constructor() : ViewModel() {
                 },
                 onTimeout = {
                     tgStreamReader!!.stopRecordRawData()
-                    _uiState.value = NeuroUiState.Unconnected
+                    _uiState.value = NeuroUiState.Disconnected
                 },
                 onAttentionReceived = { attention ->
                     _uiState.update { (it as NeuroUiState.Connected).copy(attention = attention) }
@@ -54,7 +55,7 @@ class NeuroViewModel @Inject constructor() : ViewModel() {
     }
 
     fun onBluetoothDisabled() {
-        _uiState.value = NeuroUiState.Unconnected
+        _uiState.value = NeuroUiState.Disabled
     }
 
     fun closeTgStreamReader() {

@@ -35,16 +35,19 @@ fun ConnectingChip(
         ConnectingState.Searching -> NeuroPurple
         ConnectingState.Optimizing -> NeuroGreen
         ConnectingState.Disconnected -> NeuroRed
+        ConnectingState.Disabled -> NeuroRed
     }
     val iconVector = when (state) {
         ConnectingState.Searching -> Icons.Rounded.BluetoothSearching
         ConnectingState.Optimizing -> Icons.Rounded.BluetoothConnected
         ConnectingState.Disconnected -> Icons.Rounded.BluetoothDisabled
+        ConnectingState.Disabled -> Icons.Rounded.BluetoothDisabled
     }
     val textRes = when (state) {
         ConnectingState.Searching -> R.string.connecting
         ConnectingState.Optimizing -> R.string.connected
         ConnectingState.Disconnected -> R.string.disconnected
+        ConnectingState.Disabled -> R.string.disabled
     }
 
     Surface(
