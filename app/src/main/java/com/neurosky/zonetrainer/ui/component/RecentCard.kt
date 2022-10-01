@@ -25,6 +25,7 @@ import com.neurosky.zonetrainer.ui.theme.NeuroGreen
 import com.neurosky.zonetrainer.ui.theme.NeuroRed
 import com.neurosky.zonetrainer.ui.theme.White
 import java.time.format.DateTimeFormatter
+import java.util.*
 
 @Composable
 fun RecentCard(
@@ -38,7 +39,7 @@ fun RecentCard(
     Surface(
         modifier = modifier.then(Modifier.aspectRatio(1 / 1.15f)),
         shape = RoundedCornerShape(24.dp),
-        color = color.copy(alpha = 0.08f)
+        color = color.copy(alpha = 0.1f)
     ) {
         Column(
             modifier = Modifier
@@ -55,11 +56,15 @@ fun RecentCard(
             Text(
                 text = "${stringResource(id = R.string.today_at)} ${
                     data.datetime.format(
-                        DateTimeFormatter.ofPattern(stringResource(id = R.string.recent_time_fmt))
+                        DateTimeFormatter.ofPattern(
+                            stringResource(id = R.string.recent_time_fmt),
+                            Locale.ENGLISH
+                        )
                     )
                 }",
                 color = Grey,
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
+                maxLines = 1
             )
             Box(
                 modifier = Modifier.weight(1f),
