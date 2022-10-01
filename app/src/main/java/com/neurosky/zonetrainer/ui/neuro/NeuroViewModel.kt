@@ -1,10 +1,10 @@
-package com.neurosky.zonetrainer.ui.main
+package com.neurosky.zonetrainer.ui.neuro
 
 import android.bluetooth.BluetoothAdapter
 import androidx.lifecycle.ViewModel
 import com.neurosky.connection.TgStreamReader
-import dagger.hilt.android.lifecycle.HiltViewModel
 import com.neurosky.zonetrainer.util.TgStreamHandlerImpl
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,10 +12,10 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor() : ViewModel() {
+class NeuroViewModel @Inject constructor() : ViewModel() {
 
-    private val _uiState = MutableStateFlow<MainUiState>(MainUiState.Connecting)
-    val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow<NeuroUiState>(NeuroUiState.Connecting)
+    val uiState: StateFlow<NeuroUiState> = _uiState.asStateFlow()
 
     private lateinit var tgStreamReader: TgStreamReader
 
@@ -24,7 +24,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
             bluetoothAdapter,
             TgStreamHandlerImpl(
                 onConnected = {
-                    _uiState.value = MainUiState.Connected.INIT
+                    _uiState.value = NeuroUiState.Connected.INIT
                     tgStreamReader.start()
                 },
                 onWorking = {
@@ -32,13 +32,13 @@ class MainViewModel @Inject constructor() : ViewModel() {
                 },
                 onTimeout = {
                     tgStreamReader.stopRecordRawData()
-                    _uiState.value = MainUiState.Unconnected
+                    _uiState.value = NeuroUiState.Unconnected
                 },
                 onAttentionReceived = { attention ->
-                    _uiState.update { (it as MainUiState.Connected).copy(attention = attention) }
+                    _uiState.update { (it as NeuroUiState.Connected).copy(attention = attention) }
                 },
                 onMeditationReceived = { meditation ->
-                    _uiState.update { (it as MainUiState.Connected).copy(meditation = meditation) }
+                    _uiState.update { (it as NeuroUiState.Connected).copy(meditation = meditation) }
                 }
             )
         )
@@ -54,7 +54,7 @@ class MainViewModel @Inject constructor() : ViewModel() {
     }
 
     fun onBluetoothDisabled() {
-        _uiState.value = MainUiState.Unconnected
+        _uiState.value = NeuroUiState.Unconnected
     }
 
     fun closeTgStreamReader() {

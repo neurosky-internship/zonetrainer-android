@@ -1,12 +1,12 @@
-package com.neurosky.zonetrainer.ui.main
+package com.neurosky.zonetrainer.ui.neuro
 
-sealed interface MainUiState {
-    object Unconnected : MainUiState
-    object Connecting : MainUiState
+sealed interface NeuroUiState {
+    object Unconnected : NeuroUiState
+    object Connecting : NeuroUiState
     data class Connected(
         val attention: Int,
         val meditation: Int
-    ) : MainUiState {
+    ) : NeuroUiState {
 
         companion object {
             val INIT = Connected(attention = 0, meditation = 0)

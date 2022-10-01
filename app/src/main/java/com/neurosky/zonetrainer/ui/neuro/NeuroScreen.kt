@@ -1,4 +1,4 @@
-package com.neurosky.zonetrainer.ui.main
+package com.neurosky.zonetrainer.ui.neuro
 
 import android.content.Context
 import androidx.camera.core.CameraSelector
@@ -28,7 +28,7 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 @Composable
-fun MainScreen(viewModel: MainViewModel) {
+fun MainScreen(viewModel: NeuroViewModel) {
     val uiState by viewModel.uiState.collectAsState()
 
     MainScreen(uiState = uiState)
@@ -36,24 +36,24 @@ fun MainScreen(viewModel: MainViewModel) {
 
 @Composable
 fun MainScreen(
-    uiState: MainUiState
+    uiState: NeuroUiState
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         when (uiState) {
-            is MainUiState.Connected -> {
-                if (uiState != MainUiState.Connected.INIT) {
+            is NeuroUiState.Connected -> {
+                if (uiState != NeuroUiState.Connected.INIT) {
                     MainContent(attention = uiState.attention, meditation = uiState.meditation)
                 } else {
                     Loading()
                 }
             }
-            MainUiState.Connecting -> {
+            NeuroUiState.Connecting -> {
                 Connecting()
             }
-            MainUiState.Unconnected -> {
+            NeuroUiState.Unconnected -> {
                 Unconnected()
             }
         }
