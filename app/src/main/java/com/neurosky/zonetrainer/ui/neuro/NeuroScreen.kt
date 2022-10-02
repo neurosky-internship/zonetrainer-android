@@ -60,7 +60,8 @@ fun NeuroScreen(
             if (uiState != NeuroUiState.Connected.INIT) {
                 NeuroContent(
                     attention = uiState.attention,
-                    meditation = uiState.meditation
+                    meditation = uiState.meditation,
+                    onBack = closeActivity
                 )
             } else {
                 ConnectingScreen(
