@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.google.accompanist.systemuicontroller)
 
     implementation(libs.bundles.vico)
+    implementation(libs.donut.compose)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
