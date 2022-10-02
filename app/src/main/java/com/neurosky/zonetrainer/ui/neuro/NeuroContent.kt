@@ -1,14 +1,15 @@
 package com.neurosky.zonetrainer.ui.neuro
 
-import android.content.Context
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -16,10 +17,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import androidx.core.content.ContextCompat
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
+import com.neurosky.zonetrainer.R
+import com.neurosky.zonetrainer.ui.component.NeuroDonut
+import com.neurosky.zonetrainer.ui.theme.NeuroPurple
+import com.neurosky.zonetrainer.ui.theme.NeuroRed
+import com.neurosky.zonetrainer.util.getCameraProvider
 
 @Composable
 fun NeuroContent(
@@ -54,20 +59,26 @@ fun NeuroContent(
     ) {
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
 
-        Column(
-            modifier = Modifier.align(Alignment.Center)
+
+        Row(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .fillMaxWidth()
+                .padding(18.dp)
         ) {
-            Text(text = "Attention: $attention")
-            Text(text = "Meditation: $meditation")
+            NeuroDonut(
+                title = stringResource(id = R.string.attention),
+                value = attention.toFloat(),
+                color = NeuroRed,
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(Modifier.width(18.dp))
+            NeuroDonut(
+                title = stringResource(id = R.string.meditation),
+                value = meditation.toFloat(),
+                color = NeuroPurple,
+                modifier = Modifier.weight(1f)
+            )
         }
     }
 }
-
-private suspend fun Context.getCameraProvider(): ProcessCameraProvider =
-    suspendCoroutine { continuation ->
-        ProcessCameraProvider.getInstance(this).also { cameraProvider ->
-            cameraProvider.addListener({
-                continuation.resume(cameraProvider.get())
-            }, ContextCompat.getMainExecutor(this))
-        }
-    }
