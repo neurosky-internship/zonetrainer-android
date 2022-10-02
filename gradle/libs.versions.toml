@@ -25,6 +25,7 @@ gson = "2.9.0"
 camerax = "1.1.0"
 
 vico = "1.4.3"
+donut = "2.2.2"
 
 desugar = "1.1.5"
 junit = "4.13.2"
@@ -80,6 +81,7 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 # Chart
 vico-compose = { module = "com.patrykandpatryk.vico:compose", version.ref = "vico" }
 vico-compose-m3 = { module = "com.patrykandpatryk.vico:compose-m3", version.ref = "vico" }
+donut-compose = { module = "app.futured.donut:donut-compose", version.ref = "donut" }
 
 # Test
 junit4 = { module = "junit:junit", version.ref = "junit" }
