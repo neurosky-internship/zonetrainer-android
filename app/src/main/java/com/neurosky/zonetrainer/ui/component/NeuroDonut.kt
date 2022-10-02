@@ -1,6 +1,5 @@
 package com.neurosky.zonetrainer.ui.component
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -30,7 +29,6 @@ import app.futured.donut.compose.DonutProgress
 import app.futured.donut.compose.data.DonutModel
 import app.futured.donut.compose.data.DonutSection
 
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun NeuroDonut(
     title: String,
