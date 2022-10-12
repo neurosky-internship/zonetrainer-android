@@ -4,6 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 private val LightColorScheme = lightColorScheme(
@@ -27,12 +28,13 @@ private val LightColorScheme = lightColorScheme(
 
 @Composable
 fun NeuroTheme(
+    systemBarsColor: Color = White,
     content: @Composable () -> Unit
 ) {
     val systemUiController = rememberSystemUiController()
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = White,
+            color = systemBarsColor,
             darkIcons = true,
             isNavigationBarContrastEnforced = false,
         )

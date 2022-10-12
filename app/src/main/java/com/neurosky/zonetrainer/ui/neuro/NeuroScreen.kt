@@ -102,7 +102,7 @@ fun ConnectingScreen(
             MediumTopAppBar(
                 title = {
                     Text(
-                        text = stringResource(id = R.string.analysis),
+                        text = stringResource(id = R.string.training),
                         style = MaterialTheme.typography.headlineLarge
                     )
                 },
