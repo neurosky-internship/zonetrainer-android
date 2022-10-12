@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.neurosky.zonetrainer.ui.base.BaseActivity
 import com.neurosky.zonetrainer.ui.neuro.NeuroActivity
+import com.neurosky.zonetrainer.ui.theme.NeuroBlueGrey
 import com.neurosky.zonetrainer.ui.theme.NeuroTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,7 +20,7 @@ class HomeActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            NeuroTheme {
+            NeuroTheme(systemBarsColor = NeuroBlueGrey) {
                 HomeScreen(
                     viewModel = viewModel,
                     navigateToNeuro = ::startMainActivity
