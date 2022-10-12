@@ -17,7 +17,9 @@
     <string name="max">Max</string>
     <string name="min">Min</string>
 
-    <string name="analysis">Analysis</string>
+    <string name="start_training">Start Zone Training</string>
+
+    <string name="training">Training</string>
 
     <string name="searching_msg">Searching for nearby MindWaves…</string>
     <string name="optimizing_msg">Optimizing the EEG signal…</string>
