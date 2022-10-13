@@ -10,8 +10,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.hbisoft.hbrecorder.HBRecorder
 import com.hbisoft.hbrecorder.HBRecorderListener
+import com.neurosky.zonetrainer.R
 import com.neurosky.zonetrainer.ui.base.BaseActivity
 import com.neurosky.zonetrainer.ui.theme.NeuroTheme
+import com.neurosky.zonetrainer.util.RecorderUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -101,6 +103,10 @@ class NeuroActivity : BaseActivity(), HBRecorderListener {
 
     override fun HBRecorderOnComplete() {
         viewModel.isRecording = false
+        showToast(
+            getString(R.string.video_saved, "${hbRecorder.filePath}/${hbRecorder.fileName}"),
+            enableLongLength = true
+        )
     }
 
     override fun HBRecorderOnError(errorCode: Int, reason: String?) {

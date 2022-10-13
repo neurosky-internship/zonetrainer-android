@@ -34,4 +34,6 @@
     <string name="cancel">Cancel</string>
     <string name="back">Back</string>
     <string name="retry">Retry</string>
+
+    <string name="video_saved">Saved at %s</string>
 </resources>
