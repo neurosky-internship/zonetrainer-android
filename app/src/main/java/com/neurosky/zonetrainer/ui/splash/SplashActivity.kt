@@ -47,19 +47,16 @@ class SplashActivity : BaseActivity() {
 
     private fun requestPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val permissions = BLUETOOTH_PERMISSIONS + CAMERA_PERMISSION
+            val permissions = BLUETOOTH_PERMISSIONS + OTHER_PERMISSIONS
             if (!hasPermissions(permissions)) {
                 permissionsRequestActivityLauncher.launch(permissions.toTypedArray())
             } else {
                 startHomeActivity()
             }
         } else {
-            if (ActivityCompat.checkSelfPermission(
-                    this,
-                    CAMERA_PERMISSION
-                ) == PackageManager.PERMISSION_DENIED
-            ) {
-                permissionsRequestActivityLauncher.launch(arrayOf(CAMERA_PERMISSION))
+            val permissions = OTHER_PERMISSIONS
+            if (!hasPermissions(permissions)) {
+                permissionsRequestActivityLauncher.launch(permissions.toTypedArray())
             } else {
                 startHomeActivity()
             }
@@ -81,7 +78,11 @@ class SplashActivity : BaseActivity() {
     companion object {
         private const val SPLASH_TIME_MILLIS = 1_500L
 
-        private const val CAMERA_PERMISSION = Manifest.permission.CAMERA
+        private val OTHER_PERMISSIONS = listOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
 
         private val BLUETOOTH_PERMISSIONS = listOf(
             Manifest.permission.BLUETOOTH_SCAN,

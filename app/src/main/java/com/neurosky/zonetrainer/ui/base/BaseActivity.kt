@@ -14,7 +14,11 @@ abstract class BaseActivity : ComponentActivity() {
         finish()
     }
 
-    protected open fun showToast(text: String) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
+    protected open fun showToast(text: String, enableLongLength: Boolean = false) {
+        Toast.makeText(
+            this,
+            text,
+            if (enableLongLength) Toast.LENGTH_LONG else Toast.LENGTH_SHORT
+        ).show()
     }
 }

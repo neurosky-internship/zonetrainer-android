@@ -32,9 +32,11 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.neurosky.zonetrainer.R
 import com.neurosky.zonetrainer.ui.component.NeuroDonut
 import com.neurosky.zonetrainer.ui.theme.Black
+import com.neurosky.zonetrainer.ui.theme.NeuroGreen
 import com.neurosky.zonetrainer.ui.theme.NeuroPurple
 import com.neurosky.zonetrainer.ui.theme.NeuroRed
 import com.neurosky.zonetrainer.ui.theme.White
@@ -44,9 +46,11 @@ import com.neurosky.zonetrainer.util.getCameraProvider
 fun NeuroContent(
     attention: Int,
     meditation: Int,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    isRecording: Boolean,
+    startRecording: () -> Unit,
+    stopRecording: () -> Unit
 ) {
-    var isRecording by remember { mutableStateOf(false) }
     var lensFacing by remember { mutableStateOf(CameraSelector.LENS_FACING_BACK) }
 
     val context = LocalContext.current
@@ -68,6 +72,15 @@ fun NeuroContent(
         )
 
         preview.setSurfaceProvider(previewView.surfaceProvider)
+    }
+
+    val systemUiController = rememberSystemUiController()
+
+    LaunchedEffect(isRecording) {
+        systemUiController.setStatusBarColor(
+            color = if (isRecording) NeuroGreen else White,
+            darkIcons = !isRecording
+        )
     }
 
     Box(
@@ -108,7 +121,7 @@ fun NeuroContent(
                 Icon(imageVector = Icons.Rounded.Cameraswitch, contentDescription = null)
             }
             FilledIconButton(
-                onClick = { isRecording = isRecording.not() },
+                onClick = if (isRecording) stopRecording else startRecording,
                 colors = IconButtonDefaults.iconButtonColors(
                     contentColor = Black,
                     containerColor = White
