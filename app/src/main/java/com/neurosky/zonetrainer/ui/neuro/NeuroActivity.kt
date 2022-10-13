@@ -71,6 +71,8 @@ class NeuroActivity : BaseActivity(), HBRecorderListener {
 
     private fun initHBRecorder() {
         hbRecorder = HBRecorder(this, this)
+        hbRecorder.setOutputPath(RecorderUtil.getOutputPath())
+        hbRecorder.fileName = RecorderUtil.getFileName()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
