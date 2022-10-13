@@ -44,9 +44,11 @@ import com.neurosky.zonetrainer.util.getCameraProvider
 fun NeuroContent(
     attention: Int,
     meditation: Int,
-    onBack: () -> Unit
+    onBack: () -> Unit,
+    isRecording: Boolean,
+    startRecording: () -> Unit,
+    stopRecording: () -> Unit
 ) {
-    var isRecording by remember { mutableStateOf(false) }
     var lensFacing by remember { mutableStateOf(CameraSelector.LENS_FACING_BACK) }
 
     val context = LocalContext.current
@@ -108,7 +110,7 @@ fun NeuroContent(
                 Icon(imageVector = Icons.Rounded.Cameraswitch, contentDescription = null)
             }
             FilledIconButton(
-                onClick = { isRecording = isRecording.not() },
+                onClick = if (isRecording) stopRecording else startRecording,
                 colors = IconButtonDefaults.iconButtonColors(
                     contentColor = Black,
                     containerColor = White

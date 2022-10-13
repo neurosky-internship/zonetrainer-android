@@ -38,14 +38,19 @@ import com.neurosky.zonetrainer.ui.theme.White
 fun NeuroScreen(
     viewModel: NeuroViewModel,
     closeActivity: () -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    startRecording: () -> Unit,
+    stopRecording: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     NeuroScreen(
         uiState = uiState,
         closeActivity = closeActivity,
-        onRetry = onRetry
+        onRetry = onRetry,
+        isRecording = viewModel.isRecording,
+        startRecording = startRecording,
+        stopRecording = stopRecording
     )
 }
 
@@ -53,7 +58,10 @@ fun NeuroScreen(
 fun NeuroScreen(
     uiState: NeuroUiState,
     closeActivity: () -> Unit,
-    onRetry: () -> Unit
+    onRetry: () -> Unit,
+    isRecording: Boolean,
+    startRecording: () -> Unit,
+    stopRecording: () -> Unit
 ) {
     when (uiState) {
         is NeuroUiState.Connected -> {
@@ -61,7 +69,10 @@ fun NeuroScreen(
                 NeuroContent(
                     attention = uiState.attention,
                     meditation = uiState.meditation,
-                    onBack = closeActivity
+                    onBack = closeActivity,
+                    isRecording = isRecording,
+                    startRecording = startRecording,
+                    stopRecording = stopRecording,
                 )
             } else {
                 ConnectingScreen(
