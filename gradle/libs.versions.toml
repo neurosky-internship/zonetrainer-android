@@ -26,6 +26,7 @@ camerax = "1.1.0"
 
 vico = "1.4.3"
 donut = "2.2.2"
+hbrecorder = "2.0.5"
 
 desugar = "1.1.5"
 junit = "4.13.2"
@@ -82,6 +83,9 @@ gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 vico-compose = { module = "com.patrykandpatryk.vico:compose", version.ref = "vico" }
 vico-compose-m3 = { module = "com.patrykandpatryk.vico:compose-m3", version.ref = "vico" }
 donut-compose = { module = "app.futured.donut:donut-compose", version.ref = "donut" }
+
+# Recorder
+hbisoft-hbrecorder = { module = "com.github.HBiSoft:HBRecorder", version.ref = "hbrecorder" }
 
 # Test
 junit4 = { module = "junit:junit", version.ref = "junit" }

@@ -61,6 +61,7 @@ dependencies {
 
     implementation(libs.bundles.vico)
     implementation(libs.donut.compose)
+    implementation(libs.hbisoft.hbrecorder)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
