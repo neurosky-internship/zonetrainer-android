@@ -32,9 +32,11 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.neurosky.zonetrainer.R
 import com.neurosky.zonetrainer.ui.component.NeuroDonut
 import com.neurosky.zonetrainer.ui.theme.Black
+import com.neurosky.zonetrainer.ui.theme.NeuroGreen
 import com.neurosky.zonetrainer.ui.theme.NeuroPurple
 import com.neurosky.zonetrainer.ui.theme.NeuroRed
 import com.neurosky.zonetrainer.ui.theme.White
@@ -70,6 +72,15 @@ fun NeuroContent(
         )
 
         preview.setSurfaceProvider(previewView.surfaceProvider)
+    }
+
+    val systemUiController = rememberSystemUiController()
+
+    LaunchedEffect(isRecording) {
+        systemUiController.setStatusBarColor(
+            color = if (isRecording) NeuroGreen else White,
+            darkIcons = !isRecording
+        )
     }
 
     Box(
