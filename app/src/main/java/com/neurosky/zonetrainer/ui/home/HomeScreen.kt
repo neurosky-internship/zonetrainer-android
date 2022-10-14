@@ -15,11 +15,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Headset
+import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
+import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
@@ -37,6 +40,7 @@ import com.neurosky.zonetrainer.R
 import com.neurosky.zonetrainer.ui.component.ContentCard
 import com.neurosky.zonetrainer.ui.component.NeuroChart
 import com.neurosky.zonetrainer.ui.component.RecentCard
+import com.neurosky.zonetrainer.ui.theme.Grey
 import com.neurosky.zonetrainer.ui.theme.NeuroBlue
 import com.neurosky.zonetrainer.ui.theme.NeuroBlueGrey
 import com.neurosky.zonetrainer.ui.theme.NeuroPurple
@@ -99,7 +103,19 @@ fun HomeContent(
                         modifier = Modifier.padding(horizontal = 4.dp)
                     )
                 },
-                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = NeuroBlueGrey)
+                colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = NeuroBlueGrey),
+                actions = {
+                    FilledIconButton(
+                        onClick = {},
+                        colors = IconButtonDefaults.filledIconButtonColors(
+                            containerColor = Grey.copy(alpha = 0.87f),
+                            contentColor = White
+                        ),
+                        modifier = Modifier.padding(top = 92.dp, end = 12.dp)
+                    ) {
+                        Icon(imageVector = Icons.Rounded.Person, contentDescription = null)
+                    }
+                }
             )
         },
         containerColor = NeuroBlueGrey,
@@ -139,7 +155,7 @@ fun HomeContent(
                 .padding(innerPadding)
                 .fillMaxSize()
                 .verticalScroll(scrollState)
-                .padding(horizontal = 12.dp, vertical = 24.dp)
+                .padding(horizontal = 0.dp, vertical = 24.dp)
         ) {
             ContentCard {
                 Text(
@@ -160,15 +176,15 @@ fun HomeContent(
                     )
                 }
             }
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(28.dp))
             ContentCard {
                 NeuroChart(data = attentionChart, color = NeuroPurple)
             }
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(28.dp))
             ContentCard {
                 NeuroChart(data = meditationChart, color = NeuroBlue)
             }
-            Spacer(Modifier.height(24.dp))
+            Spacer(Modifier.height(28.dp))
         }
     }
 }
