@@ -57,6 +57,7 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.camerax)
 
+    implementation(libs.gms.auth)
     implementation(libs.google.accompanist.systemuicontroller)
 
     implementation(libs.bundles.vico)
