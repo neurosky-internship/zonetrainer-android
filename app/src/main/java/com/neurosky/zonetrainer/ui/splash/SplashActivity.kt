@@ -7,8 +7,12 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.neurosky.zonetrainer.ui.base.BaseActivity
 import com.neurosky.zonetrainer.ui.home.HomeActivity
 import com.neurosky.zonetrainer.ui.theme.NeuroTheme
@@ -20,12 +24,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SplashActivity : BaseActivity() {
 
+    private val viewModel: SplashViewModel by viewModels()
+
     private val permissionsRequestActivityLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             val granted = permissions.entries.all { it.value }
-            if (granted) {
-                startHomeActivity()
-            } else {
+            if (!granted) {
                 finish()
             }
         }
@@ -33,32 +37,54 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val googleSignInClient: GoogleSignInClient = getGoogleSignInClient()
+
         setContent {
             NeuroTheme {
-                SplashScreen()
+                SplashScreen(
+                    googleSignInClient = googleSignInClient,
+                    isLoginButtonVisible = viewModel.isLoginButtonVisible,
+                    login = { viewModel.login(it) }
+                )
             }
         }
 
         lifecycleScope.launch {
             delay(SPLASH_TIME_MILLIS)
+
             requestPermissions()
+
+            if (isLoggedIn()) {
+                startHomeActivity()
+            } else {
+                viewModel.isLoginButtonVisible = true
+            }
         }
     }
+
+    private fun getGoogleSignInClient(): GoogleSignInClient {
+        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestId()
+            .requestProfile()
+            .requestEmail()
+            .build()
+
+        return GoogleSignIn.getClient(this, googleSignInOptions)
+    }
+
+    private fun isLoggedIn(): Boolean =
+        GoogleSignIn.getLastSignedInAccount(this@SplashActivity) != null
 
     private fun requestPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val permissions = BLUETOOTH_PERMISSIONS + OTHER_PERMISSIONS
             if (!hasPermissions(permissions)) {
                 permissionsRequestActivityLauncher.launch(permissions.toTypedArray())
-            } else {
-                startHomeActivity()
             }
         } else {
             val permissions = OTHER_PERMISSIONS
             if (!hasPermissions(permissions)) {
                 permissionsRequestActivityLauncher.launch(permissions.toTypedArray())
-            } else {
-                startHomeActivity()
             }
         }
     }
