@@ -9,14 +9,14 @@ import kotlinx.parcelize.Parcelize
 data class GoogleAccount(
     val id: String,
     val token: String,
-    val name: String,
-    val photoUrl: Uri
+    val name: String?,
+    val photoUrl: Uri?
 ) : Parcelable
 
 fun GoogleSignInAccount.toModel() =
     GoogleAccount(
         id = this.id!!,
         token = this.idToken!!,
-        name = this.displayName!!,
-        photoUrl = this.photoUrl!!
+        name = this.displayName,
+        photoUrl = this.photoUrl
     )

@@ -1,5 +1,6 @@
 package com.neurosky.zonetrainer.ui.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -8,8 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -19,9 +22,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
-import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
@@ -31,7 +32,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -41,7 +44,6 @@ import com.neurosky.zonetrainer.ui.component.ContentCard
 import com.neurosky.zonetrainer.ui.component.NeuroChart
 import com.neurosky.zonetrainer.ui.component.RecentCard
 import com.neurosky.zonetrainer.ui.model.GoogleAccount
-import com.neurosky.zonetrainer.ui.theme.Grey
 import com.neurosky.zonetrainer.ui.theme.NeuroBlue
 import com.neurosky.zonetrainer.ui.theme.NeuroBlueGrey
 import com.neurosky.zonetrainer.ui.theme.NeuroPurple
@@ -110,19 +112,16 @@ fun HomeContent(
                 },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(containerColor = NeuroBlueGrey),
                 actions = {
-                    FilledIconButton(
-                        onClick = {},
-                        colors = IconButtonDefaults.filledIconButtonColors(
-                            containerColor = Grey.copy(alpha = 0.87f),
-                            contentColor = White
-                        ),
-                        modifier = Modifier.padding(top = 92.dp, end = 12.dp)
-                    ) {
-                        AsyncImage(
-                            model = account.photoUrl,
-                            contentDescription = null
-                        )
-                    }
+                    AsyncImage(
+                        model = account.photoUrl,
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .padding(top = 92.dp, end = 12.dp)
+                            .clip(shape = CircleShape)
+                            .size(36.dp)
+                            .clickable { }
+                    )
                 }
             )
         },
