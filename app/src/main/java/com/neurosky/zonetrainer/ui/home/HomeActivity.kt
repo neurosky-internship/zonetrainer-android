@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import com.neurosky.zonetrainer.ui.base.BaseActivity
+import com.neurosky.zonetrainer.ui.model.GoogleAccount
 import com.neurosky.zonetrainer.ui.neuro.NeuroActivity
 import com.neurosky.zonetrainer.ui.theme.NeuroBlueGrey
 import com.neurosky.zonetrainer.ui.theme.NeuroTheme
@@ -23,19 +24,23 @@ class HomeActivity : BaseActivity() {
             NeuroTheme(systemBarsColor = NeuroBlueGrey) {
                 HomeScreen(
                     viewModel = viewModel,
-                    navigateToNeuro = ::startMainActivity
+                    navigateToNeuro = ::startNeuroActivity
                 )
             }
         }
     }
 
-    private fun startMainActivity() {
+    private fun startNeuroActivity() {
         NeuroActivity.startActivity(this)
     }
 
     companion object {
-        fun startActivity(context: Context) {
+        private const val KEY_GOOGLE_ACCOUNT = "KEY_GOOGLE_ACCOUNT"
+
+        fun startActivity(context: Context, account: GoogleAccount) {
             val intent = Intent(context, HomeActivity::class.java)
+            intent.putExtra(KEY_GOOGLE_ACCOUNT, account)
+
             context.startActivity(intent)
         }
     }

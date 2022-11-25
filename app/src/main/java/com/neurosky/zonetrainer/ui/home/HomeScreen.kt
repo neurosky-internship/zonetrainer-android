@@ -15,7 +15,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Headset
-import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,10 +35,12 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.neurosky.zonetrainer.R
 import com.neurosky.zonetrainer.ui.component.ContentCard
 import com.neurosky.zonetrainer.ui.component.NeuroChart
 import com.neurosky.zonetrainer.ui.component.RecentCard
+import com.neurosky.zonetrainer.ui.model.GoogleAccount
 import com.neurosky.zonetrainer.ui.theme.Grey
 import com.neurosky.zonetrainer.ui.theme.NeuroBlue
 import com.neurosky.zonetrainer.ui.theme.NeuroBlueGrey
@@ -53,6 +54,7 @@ fun HomeScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     HomeScreen(
+        account = viewModel.googleAccount,
         uiState = uiState,
         navigateToNeuro = navigateToNeuro
     )
@@ -60,6 +62,7 @@ fun HomeScreen(
 
 @Composable
 fun HomeScreen(
+    account: GoogleAccount,
     uiState: HomeUiState,
     navigateToNeuro: () -> Unit
 ) {
@@ -72,6 +75,7 @@ fun HomeScreen(
         }
         is HomeUiState.Success -> {
             HomeContent(
+                account = account,
                 recentAttention = uiState.data.recentAttention,
                 recentMeditation = uiState.data.recentMeditation,
                 attentionChart = uiState.data.attentionChart,
@@ -85,6 +89,7 @@ fun HomeScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeContent(
+    account: GoogleAccount,
     recentAttention: HomeData.RecentData,
     recentMeditation: HomeData.RecentData,
     attentionChart: HomeData.ChartData,

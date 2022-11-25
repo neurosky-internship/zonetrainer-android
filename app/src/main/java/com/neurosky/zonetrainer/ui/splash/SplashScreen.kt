@@ -25,25 +25,27 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
 import com.neurosky.zonetrainer.R
+import com.neurosky.zonetrainer.ui.model.GoogleAccount
+import com.neurosky.zonetrainer.ui.model.toModel
 import com.neurosky.zonetrainer.util.GoogleSignInContract
 import java.net.UnknownHostException
 
 @Composable
 fun SplashScreen(
     isLoginButtonVisible: Boolean,
-    login: (GoogleSignInAccount) -> Unit,
-    navigateToHome: () -> Unit
+    login: (GoogleAccount) -> Unit,
+    navigateToHome: (GoogleAccount) -> Unit
 ) {
     val googleSignInActivity =
         rememberLauncherForActivityResult(contract = GoogleSignInContract()) { task ->
             runCatching {
                 val account =
-                    task?.getResult(ApiException::class.java) ?: throw UnknownHostException()
+                    task?.getResult(ApiException::class.java)?.toModel()
+                        ?: throw UnknownHostException()
                 login(account)
-                navigateToHome()
+                navigateToHome(account)
             }.onFailure { Log.e("google auth fail", it.stackTraceToString()) }
         }
 

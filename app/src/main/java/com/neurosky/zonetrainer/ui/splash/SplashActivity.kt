@@ -13,6 +13,8 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.neurosky.zonetrainer.ui.base.BaseActivity
 import com.neurosky.zonetrainer.ui.home.HomeActivity
+import com.neurosky.zonetrainer.ui.model.GoogleAccount
+import com.neurosky.zonetrainer.ui.model.toModel
 import com.neurosky.zonetrainer.ui.theme.NeuroTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -50,16 +52,14 @@ class SplashActivity : BaseActivity() {
 
             requestPermissions()
 
-            if (isLoggedIn()) {
-                startHomeActivity()
+            val account = GoogleSignIn.getLastSignedInAccount(this@SplashActivity)?.toModel()
+            if (account != null) {
+                startHomeActivity(account)
             } else {
                 viewModel.isLoginButtonVisible = true
             }
         }
     }
-
-    private fun isLoggedIn(): Boolean =
-        GoogleSignIn.getLastSignedInAccount(this@SplashActivity) != null
 
     private fun requestPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -82,8 +82,8 @@ class SplashActivity : BaseActivity() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun startHomeActivity() {
-        HomeActivity.startActivity(this)
+    private fun startHomeActivity(account: GoogleAccount) {
+        HomeActivity.startActivity(this, account)
         finish()
     }
 

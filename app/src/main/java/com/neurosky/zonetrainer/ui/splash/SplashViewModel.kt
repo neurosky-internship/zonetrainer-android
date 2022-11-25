@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.neurosky.zonetrainer.ui.model.GoogleAccount
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -14,7 +14,7 @@ class SplashViewModel @Inject constructor() : ViewModel() {
 
     var isLoginButtonVisible by mutableStateOf(false)
 
-    fun login(account: GoogleSignInAccount) {
-        Log.d("google login", "token: ${account.idToken}\nid: ${account.id}")
+    fun login(account: GoogleAccount) {
+        Log.d("google login", "token: ${account.token}\nid: ${account.id}")
     }
 }
