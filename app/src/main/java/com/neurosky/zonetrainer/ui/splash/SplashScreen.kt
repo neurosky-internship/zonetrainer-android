@@ -1,12 +1,19 @@
 package com.neurosky.zonetrainer.ui.splash
 
-import android.app.Activity
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
@@ -18,28 +25,26 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.common.api.ApiException
 import com.neurosky.zonetrainer.R
+import com.neurosky.zonetrainer.util.GoogleSignInContract
+import java.net.UnknownHostException
 
 @Composable
 fun SplashScreen(
-    googleSignInClient: GoogleSignInClient,
     isLoginButtonVisible: Boolean,
-    login: (String) -> Unit
+    login: (GoogleSignInAccount) -> Unit,
+    navigateToHome: () -> Unit
 ) {
     val googleSignInActivity =
-        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val intent = result.data
-                if (result.data != null) {
-                    val account: GoogleSignInAccount =
-                        GoogleSignIn.getSignedInAccountFromIntent(intent).result
-
-                    login(account.id!!)
-                }
-            }
+        rememberLauncherForActivityResult(contract = GoogleSignInContract()) { task ->
+            runCatching {
+                val account =
+                    task?.getResult(ApiException::class.java) ?: throw UnknownHostException()
+                login(account)
+                navigateToHome()
+            }.onFailure { Log.e("google auth fail", it.stackTraceToString()) }
         }
 
     Box(
@@ -57,7 +62,7 @@ fun SplashScreen(
         )
         if (isLoginButtonVisible) {
             ElevatedButton(
-                onClick = { googleSignInActivity.launch(googleSignInClient.signInIntent) },
+                onClick = { googleSignInActivity.launch(1000) },
                 colors = ButtonDefaults.elevatedButtonColors(containerColor = Color.White),
                 contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp),
                 modifier = Modifier.align(Alignment.BottomCenter)

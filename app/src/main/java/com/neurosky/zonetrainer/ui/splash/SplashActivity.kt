@@ -11,8 +11,6 @@ import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.neurosky.zonetrainer.ui.base.BaseActivity
 import com.neurosky.zonetrainer.ui.home.HomeActivity
 import com.neurosky.zonetrainer.ui.theme.NeuroTheme
@@ -37,14 +35,12 @@ class SplashActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val googleSignInClient: GoogleSignInClient = getGoogleSignInClient()
-
         setContent {
             NeuroTheme {
                 SplashScreen(
-                    googleSignInClient = googleSignInClient,
                     isLoginButtonVisible = viewModel.isLoginButtonVisible,
-                    login = { viewModel.login(it) }
+                    login = { viewModel.login(it) },
+                    navigateToHome = ::startHomeActivity
                 )
             }
         }
@@ -60,16 +56,6 @@ class SplashActivity : BaseActivity() {
                 viewModel.isLoginButtonVisible = true
             }
         }
-    }
-
-    private fun getGoogleSignInClient(): GoogleSignInClient {
-        val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestId()
-            .requestProfile()
-            .requestEmail()
-            .build()
-
-        return GoogleSignIn.getClient(this, googleSignInOptions)
     }
 
     private fun isLoggedIn(): Boolean =
