@@ -1,6 +1,8 @@
 package com.neurosky.zonetrainer.ui.home
 
+import androidx.lifecycle.SavedStateHandle
 import com.neurosky.zonetrainer.ui.base.BaseViewModel
+import com.neurosky.zonetrainer.ui.model.GoogleAccount
 import com.neurosky.zonetrainer.ui.model.NeuroType
 import com.patrykandpatryk.vico.core.entry.FloatEntry
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,7 +14,11 @@ import javax.inject.Inject
 import kotlin.random.Random
 
 @HiltViewModel
-class HomeViewModel @Inject constructor() : BaseViewModel() {
+class HomeViewModel @Inject constructor(
+    handle: SavedStateHandle
+) : BaseViewModel() {
+
+    val googleAccount = handle.get<GoogleAccount>(KEY_GOOGLE_ACCOUNT)!!
 
     private val _uiState = MutableStateFlow<HomeUiState>(HomeUiState.Loading)
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
@@ -53,5 +59,9 @@ class HomeViewModel @Inject constructor() : BaseViewModel() {
             x = x.toFloat(),
             y = y,
         )
+    }
+
+    companion object {
+        const val KEY_GOOGLE_ACCOUNT = "KEY_GOOGLE_ACCOUNT"
     }
 }

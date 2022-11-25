@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("dagger.hilt.android.plugin")
+    id("kotlin-parcelize")
     kotlin("android")
     kotlin("kapt")
 }
@@ -57,8 +58,10 @@ dependencies {
     implementation(libs.bundles.compose)
     implementation(libs.bundles.camerax)
 
+    implementation(libs.gms.auth)
     implementation(libs.google.accompanist.systemuicontroller)
 
+    implementation(libs.coil.compose)
     implementation(libs.bundles.vico)
     implementation(libs.donut.compose)
     implementation(libs.hbisoft.hbrecorder)

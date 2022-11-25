@@ -7,10 +7,14 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.neurosky.zonetrainer.ui.base.BaseActivity
 import com.neurosky.zonetrainer.ui.home.HomeActivity
+import com.neurosky.zonetrainer.ui.model.GoogleAccount
+import com.neurosky.zonetrainer.ui.model.toModel
 import com.neurosky.zonetrainer.ui.theme.NeuroTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -20,12 +24,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SplashActivity : BaseActivity() {
 
+    private val viewModel: SplashViewModel by viewModels()
+
     private val permissionsRequestActivityLauncher =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             val granted = permissions.entries.all { it.value }
-            if (granted) {
-                startHomeActivity()
-            } else {
+            if (!granted) {
                 finish()
             }
         }
@@ -35,13 +39,25 @@ class SplashActivity : BaseActivity() {
 
         setContent {
             NeuroTheme {
-                SplashScreen()
+                SplashScreen(
+                    isLoginButtonVisible = viewModel.isLoginButtonVisible,
+                    login = { viewModel.login(it) },
+                    navigateToHome = ::startHomeActivity
+                )
             }
         }
 
         lifecycleScope.launch {
             delay(SPLASH_TIME_MILLIS)
+
             requestPermissions()
+
+            val account = GoogleSignIn.getLastSignedInAccount(this@SplashActivity)?.toModel()
+            if (account != null) {
+                startHomeActivity(account)
+            } else {
+                viewModel.isLoginButtonVisible = true
+            }
         }
     }
 
@@ -50,15 +66,11 @@ class SplashActivity : BaseActivity() {
             val permissions = BLUETOOTH_PERMISSIONS + OTHER_PERMISSIONS
             if (!hasPermissions(permissions)) {
                 permissionsRequestActivityLauncher.launch(permissions.toTypedArray())
-            } else {
-                startHomeActivity()
             }
         } else {
             val permissions = OTHER_PERMISSIONS
             if (!hasPermissions(permissions)) {
                 permissionsRequestActivityLauncher.launch(permissions.toTypedArray())
-            } else {
-                startHomeActivity()
             }
         }
     }
@@ -70,8 +82,8 @@ class SplashActivity : BaseActivity() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun startHomeActivity() {
-        HomeActivity.startActivity(this)
+    private fun startHomeActivity(account: GoogleAccount) {
+        HomeActivity.startActivity(this, account)
         finish()
     }
 

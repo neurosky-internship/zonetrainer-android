@@ -36,4 +36,6 @@
     <string name="retry">Retry</string>
 
     <string name="video_saved">Saved at %s</string>
+
+    <string name="sign_in_with_google">Sign in with Google</string>
 </resources>
