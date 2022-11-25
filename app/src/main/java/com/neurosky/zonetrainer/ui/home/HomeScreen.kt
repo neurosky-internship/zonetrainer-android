@@ -113,7 +113,10 @@ fun HomeContent(
                         ),
                         modifier = Modifier.padding(top = 92.dp, end = 12.dp)
                     ) {
-                        Icon(imageVector = Icons.Rounded.Person, contentDescription = null)
+                        AsyncImage(
+                            model = account.photoUrl,
+                            contentDescription = null
+                        )
                     }
                 }
             )
