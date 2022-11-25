@@ -60,6 +60,7 @@ dependencies {
     implementation(libs.gms.auth)
     implementation(libs.google.accompanist.systemuicontroller)
 
+    implementation(libs.coil.compose)
     implementation(libs.bundles.vico)
     implementation(libs.donut.compose)
     implementation(libs.hbisoft.hbrecorder)
