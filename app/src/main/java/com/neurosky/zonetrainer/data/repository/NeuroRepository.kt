@@ -1,6 +1,7 @@
 package com.neurosky.zonetrainer.data.repository
 
 import com.neurosky.zonetrainer.data.remote.api.NeuroService
+import com.neurosky.zonetrainer.data.remote.model.NeuroRequest
 import com.neurosky.zonetrainer.ui.home.HomeData
 import com.neurosky.zonetrainer.ui.model.NeuroType
 import com.patrykandpatryk.vico.core.entry.FloatEntry
@@ -69,4 +70,19 @@ class NeuroRepository @Inject constructor(
             )
         )
     }
+
+    suspend fun postNeuroData(
+        userId: String,
+        attentionData: List<NeuroRequest.NeuroData>,
+        meditationData: List<NeuroRequest.NeuroData>
+    ): Result<Unit> =
+        runCatching {
+            service.postNeuroData(
+                NeuroRequest(
+                    userId = userId,
+                    attentionData = attentionData,
+                    meditationData = meditationData
+                )
+            )
+        }
 }
