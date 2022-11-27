@@ -67,6 +67,7 @@ dependencies {
     implementation(libs.hbisoft.hbrecorder)
 
     implementation(libs.retrofit.core)
+    implementation(libs.retrofit.converter.gson)
     
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
