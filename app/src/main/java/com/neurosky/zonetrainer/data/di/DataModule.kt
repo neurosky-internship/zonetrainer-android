@@ -1,5 +1,7 @@
 package com.neurosky.zonetrainer.data.di
 
+import com.neurosky.zonetrainer.data.remote.api.NeuroService
+import com.neurosky.zonetrainer.data.repository.NeuroRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +18,16 @@ object DataModule {
     @Singleton
     fun provideRetrofit(): Retrofit =
         Retrofit.Builder()
-            .baseUrl("http://localhost:3000")
+            .baseUrl("http://10.0.2.2:3000/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
+    @Provides
+    @Singleton
+    fun provideNeuroService(retrofit: Retrofit): NeuroService =
+        retrofit.create(NeuroService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideNeuroRepository(service: NeuroService) = NeuroRepository(service)
 }
