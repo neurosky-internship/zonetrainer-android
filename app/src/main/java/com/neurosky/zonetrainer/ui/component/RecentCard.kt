@@ -1,13 +1,6 @@
 package com.neurosky.zonetrainer.ui.component
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -24,7 +17,6 @@ import com.neurosky.zonetrainer.ui.theme.Grey
 import com.neurosky.zonetrainer.ui.theme.NeuroGreen
 import com.neurosky.zonetrainer.ui.theme.NeuroRed
 import com.neurosky.zonetrainer.ui.theme.White
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 @Composable
@@ -54,14 +46,7 @@ fun RecentCard(
             )
             Spacer(Modifier.height(4.dp))
             Text(
-                text = "${stringResource(id = R.string.today_at)} ${
-                    data.datetime.format(
-                        DateTimeFormatter.ofPattern(
-                            stringResource(id = R.string.recent_time_fmt),
-                            Locale.ENGLISH
-                        )
-                    )
-                }",
+                text = data.datetime,
                 color = Grey,
                 style = MaterialTheme.typography.bodySmall,
                 maxLines = 1
