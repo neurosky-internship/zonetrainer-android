@@ -29,7 +29,7 @@ import com.google.android.gms.common.api.ApiException
 import com.neurosky.zonetrainer.R
 import com.neurosky.zonetrainer.ui.model.GoogleAccount
 import com.neurosky.zonetrainer.ui.model.toModel
-import com.neurosky.zonetrainer.util.GoogleSignInContract
+import com.neurosky.zonetrainer.ui.util.GoogleSignInContract
 import java.net.UnknownHostException
 
 @Composable

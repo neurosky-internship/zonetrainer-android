@@ -1,4 +1,4 @@
-package com.neurosky.zonetrainer.util
+package com.neurosky.zonetrainer.ui.util
 
 import com.patrykandpatryk.vico.core.entry.ChartEntryModelProducer
 

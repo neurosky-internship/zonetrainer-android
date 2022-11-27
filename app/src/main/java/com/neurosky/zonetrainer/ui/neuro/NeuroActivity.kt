@@ -13,7 +13,7 @@ import com.hbisoft.hbrecorder.HBRecorderListener
 import com.neurosky.zonetrainer.R
 import com.neurosky.zonetrainer.ui.base.BaseActivity
 import com.neurosky.zonetrainer.ui.theme.NeuroTheme
-import com.neurosky.zonetrainer.util.RecorderUtil
+import com.neurosky.zonetrainer.ui.util.RecorderUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 

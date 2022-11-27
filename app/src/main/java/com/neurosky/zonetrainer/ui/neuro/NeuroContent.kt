@@ -40,7 +40,7 @@ import com.neurosky.zonetrainer.ui.theme.NeuroGreen
 import com.neurosky.zonetrainer.ui.theme.NeuroPurple
 import com.neurosky.zonetrainer.ui.theme.NeuroRed
 import com.neurosky.zonetrainer.ui.theme.White
-import com.neurosky.zonetrainer.util.getCameraProvider
+import com.neurosky.zonetrainer.ui.util.getCameraProvider
 
 @Composable
 fun NeuroContent(

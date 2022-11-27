@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.neurosky.connection.TgStreamReader
-import com.neurosky.zonetrainer.util.TgStreamHandlerImpl
+import com.neurosky.zonetrainer.ui.util.TgStreamHandlerImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
