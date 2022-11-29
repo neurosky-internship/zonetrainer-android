@@ -73,8 +73,8 @@ class NeuroRepository @Inject constructor(
 
     suspend fun postNeuroData(
         userId: String,
-        attentionData: List<NeuroRequest.NeuroData>,
-        meditationData: List<NeuroRequest.NeuroData>
+        attentionData: List<NeuroRequest.AttentionData>,
+        meditationData: List<NeuroRequest.MeditationData>
     ): Result<Unit> =
         runCatching {
             service.postNeuroData(
