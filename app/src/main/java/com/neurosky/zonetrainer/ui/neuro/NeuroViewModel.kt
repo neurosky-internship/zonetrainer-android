@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,8 +36,8 @@ class NeuroViewModel @Inject constructor(
 
     var isRecording by mutableStateOf(false)
 
-    val attentionLogData: List<NeuroRequest.NeuroData> = emptyList()
-    val meditationLogData: List<NeuroRequest.NeuroData> = emptyList()
+    val attentionLogData: MutableList<NeuroRequest.AttentionData> = mutableListOf()
+    val meditationLogData: MutableList<NeuroRequest.MeditationData> = mutableListOf()
 
     fun onBluetoothEnabled(bluetoothAdapter: BluetoothAdapter) {
         _uiState.value = NeuroUiState.Connecting
@@ -55,10 +56,22 @@ class NeuroViewModel @Inject constructor(
                     _uiState.value = NeuroUiState.Disconnected
                 },
                 onAttentionReceived = { attention ->
-                    _uiState.update { (it as NeuroUiState.Connected).copy(attention = attention) }
+                    _uiState.update {
+                        (it as NeuroUiState.Connected).copy(attention = attention)
+                    }
+                    attentionLogData.add(
+                        NeuroRequest.AttentionData(
+                            timestamp = LocalDate.now().toString(), attention = attention
+                        )
+                    )
                 },
                 onMeditationReceived = { meditation ->
                     _uiState.update { (it as NeuroUiState.Connected).copy(meditation = meditation) }
+                    meditationLogData.add(
+                        NeuroRequest.MeditationData(
+                            timestamp = LocalDate.now().toString(), meditation = meditation
+                        )
+                    )
                 }
             )
         )
@@ -92,6 +105,8 @@ class NeuroViewModel @Inject constructor(
                 meditationData = meditationLogData
             )
         }
+        attentionLogData.clear()
+        meditationLogData.clear()
     }
 
     companion object {
