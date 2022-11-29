@@ -2,7 +2,6 @@ package com.neurosky.zonetrainer.ui.home
 
 import com.neurosky.zonetrainer.ui.model.NeuroType
 import com.patrykandpatryk.vico.core.entry.ChartEntry
-import java.time.LocalDateTime
 
 data class HomeData(
     val recentAttention: RecentData,
@@ -13,7 +12,7 @@ data class HomeData(
     data class RecentData(
         val type: NeuroType,
         val value: Int,
-        val datetime: LocalDateTime
+        val datetime: String
     )
 
     data class ChartData(

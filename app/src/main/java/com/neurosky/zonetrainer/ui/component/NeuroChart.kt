@@ -17,8 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.neurosky.zonetrainer.ui.home.HomeData
 import com.neurosky.zonetrainer.ui.model.ChartType
-import com.neurosky.zonetrainer.util.getMaxX
-import com.neurosky.zonetrainer.util.marker
+import com.neurosky.zonetrainer.ui.util.getMaxX
+import com.neurosky.zonetrainer.ui.util.marker
 import com.patrykandpatryk.vico.compose.axis.horizontal.bottomAxis
 import com.patrykandpatryk.vico.compose.axis.vertical.startAxis
 import com.patrykandpatryk.vico.compose.chart.Chart

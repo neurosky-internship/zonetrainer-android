@@ -12,8 +12,9 @@ import com.hbisoft.hbrecorder.HBRecorder
 import com.hbisoft.hbrecorder.HBRecorderListener
 import com.neurosky.zonetrainer.R
 import com.neurosky.zonetrainer.ui.base.BaseActivity
+import com.neurosky.zonetrainer.ui.model.GoogleAccount
 import com.neurosky.zonetrainer.ui.theme.NeuroTheme
-import com.neurosky.zonetrainer.util.RecorderUtil
+import com.neurosky.zonetrainer.ui.util.RecorderUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -45,6 +46,7 @@ class NeuroActivity : BaseActivity(), HBRecorderListener {
 
     override fun finish() {
         super.finish()
+        viewModel.postLogData()
         viewModel.closeTgStreamReader()
         if (hbRecorder.isBusyRecording) {
             hbRecorder.stopScreenRecording()
@@ -53,6 +55,7 @@ class NeuroActivity : BaseActivity(), HBRecorderListener {
 
     override fun onDestroy() {
         super.onDestroy()
+        viewModel.postLogData()
         viewModel.closeTgStreamReader()
         if (hbRecorder.isBusyRecording) {
             hbRecorder.stopScreenRecording()
@@ -115,9 +118,12 @@ class NeuroActivity : BaseActivity(), HBRecorderListener {
 
     companion object {
         private const val SCREEN_RECORD_REQUEST_CODE = 1000
+        private const val KEY_GOOGLE_ACCOUNT = "KEY_GOOGLE_ACCOUNT"
 
-        fun startActivity(context: Context) {
+        fun startActivity(context: Context, account: GoogleAccount) {
             val intent = Intent(context, NeuroActivity::class.java)
+            intent.putExtra(KEY_GOOGLE_ACCOUNT, account)
+
             context.startActivity(intent)
         }
     }
