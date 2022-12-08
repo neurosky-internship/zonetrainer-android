@@ -27,7 +27,7 @@ class NeuroViewModel @Inject constructor(
     private val repository: NeuroRepository
 ) : ViewModel() {
 
-    val googleAccount = handle.get<GoogleAccount>(KEY_GOOGLE_ACCOUNT)!!
+    private val googleAccount = handle.get<GoogleAccount>(KEY_GOOGLE_ACCOUNT)!!
 
     private val _uiState = MutableStateFlow<NeuroUiState>(NeuroUiState.Connecting)
     val uiState: StateFlow<NeuroUiState> = _uiState.asStateFlow()
@@ -36,8 +36,8 @@ class NeuroViewModel @Inject constructor(
 
     var isRecording by mutableStateOf(false)
 
-    val attentionLogData: MutableList<NeuroRequest.AttentionData> = mutableListOf()
-    val meditationLogData: MutableList<NeuroRequest.MeditationData> = mutableListOf()
+    private val attentionLogData: MutableList<NeuroRequest.AttentionData> = mutableListOf()
+    private val meditationLogData: MutableList<NeuroRequest.MeditationData> = mutableListOf()
 
     fun onBluetoothEnabled(bluetoothAdapter: BluetoothAdapter) {
         _uiState.value = NeuroUiState.Connecting
@@ -56,9 +56,7 @@ class NeuroViewModel @Inject constructor(
                     _uiState.value = NeuroUiState.Disconnected
                 },
                 onAttentionReceived = { attention ->
-                    _uiState.update {
-                        (it as NeuroUiState.Connected).copy(attention = attention)
-                    }
+                    _uiState.update { (it as NeuroUiState.Connected).copy(attention = attention) }
                     attentionLogData.add(
                         NeuroRequest.AttentionData(
                             timestamp = LocalDate.now().toString(), attention = attention
