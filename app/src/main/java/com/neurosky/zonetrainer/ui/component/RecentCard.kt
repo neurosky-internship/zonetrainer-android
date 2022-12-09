@@ -1,6 +1,13 @@
 package com.neurosky.zonetrainer.ui.component
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -11,22 +18,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.neurosky.zonetrainer.R
 import com.neurosky.zonetrainer.ui.home.HomeData
+import com.neurosky.zonetrainer.ui.home.HomeData.RecentData.Companion.Status
 import com.neurosky.zonetrainer.ui.theme.Grey
 import com.neurosky.zonetrainer.ui.theme.NeuroGreen
 import com.neurosky.zonetrainer.ui.theme.NeuroRed
 import com.neurosky.zonetrainer.ui.theme.White
-import java.util.*
 
 @Composable
 fun RecentCard(
     data: HomeData.RecentData,
-    boundaryValue: Int = 50,
     modifier: Modifier = Modifier
 ) {
-    val isGood = data.value >= boundaryValue
-    val color = if (isGood) NeuroGreen else NeuroRed
+    val color = when (data.status) {
+        Status.Good -> NeuroGreen
+        Status.Bad -> NeuroRed
+        Status.None -> Grey
+    }
 
     Surface(
         modifier = modifier.then(Modifier.aspectRatio(1 / 1.15f)),
@@ -67,7 +75,7 @@ fun RecentCard(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = stringResource(id = if (isGood) R.string.good else R.string.bad),
+                            text = data.status.toString().uppercase(),
                             modifier = Modifier.align(Alignment.Center),
                             color = color,
                             style = MaterialTheme.typography.bodySmall,
