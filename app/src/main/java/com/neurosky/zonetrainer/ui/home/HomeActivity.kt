@@ -30,6 +30,11 @@ class HomeActivity : BaseActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.refresh()
+    }
+
     private fun startNeuroActivity() {
         NeuroActivity.startActivity(this, account = viewModel.googleAccount)
     }

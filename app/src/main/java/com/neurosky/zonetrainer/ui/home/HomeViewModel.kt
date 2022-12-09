@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     handle: SavedStateHandle,
-    repository: NeuroRepository
+    private val repository: NeuroRepository
 ) : BaseViewModel() {
 
     val googleAccount = handle.get<GoogleAccount>(KEY_GOOGLE_ACCOUNT)!!
@@ -25,6 +25,10 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     init {
+        refresh()
+    }
+
+    fun refresh() {
         _uiState.value = HomeUiState.Loading
         viewModelScope.launch {
             repository.getHomeData(googleAccount.id)
