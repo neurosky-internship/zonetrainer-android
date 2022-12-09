@@ -38,4 +38,6 @@
     <string name="video_saved">Saved at %s</string>
 
     <string name="sign_in_with_google">Sign in with Google</string>
+
+    <string name="fail_to_load">"Fail to load data. Please check your network status."</string>
 </resources>

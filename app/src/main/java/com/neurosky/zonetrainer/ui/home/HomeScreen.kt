@@ -1,6 +1,7 @@
 package com.neurosky.zonetrainer.ui.home
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Headset
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.Icon
@@ -31,6 +33,7 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -70,11 +73,21 @@ fun HomeScreen(
 ) {
     when (uiState) {
         HomeUiState.Loading -> {
-            //TODO: Loading Component
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
         }
+
         HomeUiState.Failure -> {
-            //TODO: Failure Component
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text(text = stringResource(id = R.string.fail_to_load))
+            }
         }
+
         is HomeUiState.Success -> {
             HomeContent(
                 account = account,
