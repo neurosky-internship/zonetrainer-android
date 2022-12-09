@@ -44,16 +44,7 @@ class NeuroActivity : BaseActivity(), HBRecorderListener {
         }
     }
 
-    override fun finish() {
-        super.finish()
-        viewModel.postLogData()
-        viewModel.closeTgStreamReader()
-        if (hbRecorder.isBusyRecording) {
-            hbRecorder.stopScreenRecording()
-        }
-    }
-
-    override fun onDestroy() {
+    override fun onStop() {
         super.onDestroy()
         viewModel.postLogData()
         viewModel.closeTgStreamReader()
