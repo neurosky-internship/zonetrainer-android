@@ -2,7 +2,6 @@ package com.neurosky.zonetrainer.ui.home
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -18,13 +17,6 @@ class HomeActivity : BaseActivity() {
 
     private val viewModel: HomeViewModel by viewModels()
 
-    private val googleAccount = if (Build.VERSION.SDK_INT >= 33) intent.getParcelableExtra(
-        KEY_GOOGLE_ACCOUNT,
-        GoogleAccount::class.java
-    ) else intent.getParcelableExtra(
-        KEY_GOOGLE_ACCOUNT
-    )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -39,7 +31,7 @@ class HomeActivity : BaseActivity() {
     }
 
     private fun startNeuroActivity() {
-        NeuroActivity.startActivity(this, account = googleAccount!!)
+        NeuroActivity.startActivity(this, account = viewModel.googleAccount)
     }
 
     companion object {
