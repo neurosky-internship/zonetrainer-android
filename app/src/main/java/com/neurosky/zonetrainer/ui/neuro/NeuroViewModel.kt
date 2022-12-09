@@ -1,6 +1,7 @@
 package com.neurosky.zonetrainer.ui.neuro
 
 import android.bluetooth.BluetoothAdapter
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -57,19 +58,23 @@ class NeuroViewModel @Inject constructor(
                 },
                 onAttentionReceived = { attention ->
                     _uiState.update { (it as NeuroUiState.Connected).copy(attention = attention) }
-                    attentionLogData.add(
-                        NeuroRequest.AttentionData(
-                            timestamp = LocalDate.now().toString(), attention = attention
+                    if (attention != 0) {
+                        attentionLogData.add(
+                            NeuroRequest.AttentionData(
+                                timestamp = LocalDate.now().toString(), attention = attention
+                            )
                         )
-                    )
+                    }
                 },
                 onMeditationReceived = { meditation ->
                     _uiState.update { (it as NeuroUiState.Connected).copy(meditation = meditation) }
-                    meditationLogData.add(
-                        NeuroRequest.MeditationData(
-                            timestamp = LocalDate.now().toString(), meditation = meditation
+                    if (meditation != 0) {
+                        meditationLogData.add(
+                            NeuroRequest.MeditationData(
+                                timestamp = LocalDate.now().toString(), meditation = meditation
+                            )
                         )
-                    )
+                    }
                 }
             )
         )
