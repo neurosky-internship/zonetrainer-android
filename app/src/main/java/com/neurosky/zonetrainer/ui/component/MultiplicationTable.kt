@@ -66,7 +66,7 @@ fun QuestionPanel(
         color = Color.White
     ) {
         Text(
-            "$x × $y = ?",
+            "$x  ×  $y  =  ?",
             style = TextStyle(fontWeight = FontWeight.Bold),
             modifier = Modifier.padding(vertical = 12.dp, horizontal = 48.dp)
         )
@@ -79,14 +79,19 @@ fun NumberTable(
     answer: Int,
     onCorrect: () -> Unit
 ) {
-    LazyVerticalGrid(columns = GridCells.Fixed(TABLE_SIZE)) {
-        items(numbers) { number ->
-            ElevatedButton(
-                onClick = { if (number == answer) onCorrect() },
-                modifier = Modifier.aspectRatio(1F),
-                contentPadding = PaddingValues(4.dp)
-            ) {
-                Text(number.toString(), maxLines = 1, overflow = TextOverflow.Visible)
+    Surface(
+        shape = RoundedCornerShape(12.dp),
+        color = Color.Transparent
+    ) {
+        LazyVerticalGrid(columns = GridCells.Fixed(TABLE_SIZE)) {
+            items(numbers) { number ->
+                ElevatedButton(
+                    onClick = { if (number == answer) onCorrect() },
+                    modifier = Modifier.aspectRatio(1F),
+                    contentPadding = PaddingValues(4.dp)
+                ) {
+                    Text(number.toString(), maxLines = 1, overflow = TextOverflow.Visible)
+                }
             }
         }
     }
