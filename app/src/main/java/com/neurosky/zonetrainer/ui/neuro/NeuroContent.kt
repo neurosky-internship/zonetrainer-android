@@ -3,7 +3,9 @@ package com.neurosky.zonetrainer.ui.neuro
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.view.PreviewView
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,7 +15,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Cameraswitch
 import androidx.compose.material.icons.rounded.ChevronLeft
+import androidx.compose.material.icons.rounded.DonutLarge
 import androidx.compose.material.icons.rounded.FiberManualRecord
+import androidx.compose.material.icons.rounded.Games
 import androidx.compose.material.icons.rounded.Stop
 import androidx.compose.material3.FilledIconButton
 import androidx.compose.material3.Icon
@@ -34,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.neurosky.zonetrainer.R
+import com.neurosky.zonetrainer.ui.component.MultiplicationTable
 import com.neurosky.zonetrainer.ui.component.NeuroDonut
 import com.neurosky.zonetrainer.ui.theme.Black
 import com.neurosky.zonetrainer.ui.theme.NeuroGreen
@@ -52,6 +57,7 @@ fun NeuroContent(
     stopRecording: () -> Unit
 ) {
     var lensFacing by remember { mutableStateOf(CameraSelector.LENS_FACING_BACK) }
+    var isPlaying by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -61,6 +67,8 @@ fun NeuroContent(
     val cameraSelector = CameraSelector.Builder()
         .requireLensFacing(lensFacing)
         .build()
+
+    val systemUiController = rememberSystemUiController()
 
     LaunchedEffect(lensFacing) {
         val cameraProvider = context.getCameraProvider()
@@ -74,8 +82,6 @@ fun NeuroContent(
         preview.setSurfaceProvider(previewView.surfaceProvider)
     }
 
-    val systemUiController = rememberSystemUiController()
-
     LaunchedEffect(isRecording) {
         systemUiController.setStatusBarColor(
             color = if (isRecording) NeuroGreen else White,
@@ -84,67 +90,88 @@ fun NeuroContent(
     }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = Modifier.fillMaxSize()
     ) {
         AndroidView({ previewView }, modifier = Modifier.fillMaxSize())
 
-        Box(
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(12.dp)
+                .padding(12.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
         ) {
-            FilledIconButton(
-                onClick = onBack,
-                colors = IconButtonDefaults.iconButtonColors(
-                    contentColor = Black,
-                    containerColor = White
-                ),
-                modifier = Modifier.align(Alignment.TopStart)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.Top
             ) {
-                Icon(imageVector = Icons.Rounded.ChevronLeft, contentDescription = null)
-            }
-            FilledIconButton(
-                onClick = {
-                    lensFacing = if (lensFacing == CameraSelector.LENS_FACING_BACK) {
-                        CameraSelector.LENS_FACING_FRONT
-                    } else {
-                        CameraSelector.LENS_FACING_BACK
+                FilledIconButton(
+                    onClick = onBack,
+                    colors = IconButtonDefaults.iconButtonColors(
+                        contentColor = Black,
+                        containerColor = White
+                    )
+                ) {
+                    Icon(imageVector = Icons.Rounded.ChevronLeft, contentDescription = null)
+                }
+                FilledIconButton(
+                    onClick = {
+                        lensFacing = if (lensFacing == CameraSelector.LENS_FACING_BACK) {
+                            CameraSelector.LENS_FACING_FRONT
+                        } else {
+                            CameraSelector.LENS_FACING_BACK
+                        }
+                    },
+                    colors = IconButtonDefaults.iconButtonColors(
+                        contentColor = Black,
+                        containerColor = White
+                    )
+                ) {
+                    Icon(imageVector = Icons.Rounded.Cameraswitch, contentDescription = null)
+                }
+                Column {
+                    FilledIconButton(
+                        onClick = if (isRecording) stopRecording else startRecording,
+                        colors = IconButtonDefaults.iconButtonColors(
+                            contentColor = Black,
+                            containerColor = White
+                        )
+                    ) {
+                        if (isRecording) {
+                            Icon(
+                                imageVector = Icons.Rounded.Stop,
+                                contentDescription = null
+                            )
+                        } else {
+                            Icon(
+                                imageVector = Icons.Rounded.FiberManualRecord,
+                                contentDescription = null,
+                                tint = Color.Red
+                            )
+                        }
                     }
-                },
-                colors = IconButtonDefaults.iconButtonColors(
-                    contentColor = Black,
-                    containerColor = White
-                ),
-                modifier = Modifier.align(Alignment.TopCenter)
-            ) {
-                Icon(imageVector = Icons.Rounded.Cameraswitch, contentDescription = null)
-            }
-            FilledIconButton(
-                onClick = if (isRecording) stopRecording else startRecording,
-                colors = IconButtonDefaults.iconButtonColors(
-                    contentColor = Black,
-                    containerColor = White
-                ),
-                modifier = Modifier.align(Alignment.TopEnd)
-            ) {
-                if (isRecording) {
-                    Icon(
-                        imageVector = Icons.Rounded.Stop,
-                        contentDescription = null
-                    )
-                } else {
-                    Icon(
-                        imageVector = Icons.Rounded.FiberManualRecord,
-                        contentDescription = null,
-                        tint = Color.Red
-                    )
+                    FilledIconButton(
+                        onClick = { isPlaying = isPlaying.not() },
+                        colors = IconButtonDefaults.iconButtonColors(
+                            contentColor = Black,
+                            containerColor = White
+                        )
+                    ) {
+                        Icon(
+                            imageVector = if (isPlaying) Icons.Rounded.DonutLarge else Icons.Rounded.Games,
+                            contentDescription = null
+                        )
+                    }
                 }
             }
+
+            if (isPlaying) {
+                MultiplicationTable(modifier = Modifier.padding(4.dp))
+            }
+
             Row(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             ) {
                 NeuroDonut(
                     title = stringResource(id = R.string.attention),
