@@ -14,8 +14,8 @@ android {
         applicationId = "com.neurosky.zonetrainer"
         minSdk = 24
         targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.1"
 
         vectorDrawables {
             useSupportLibrary = true
@@ -68,7 +68,7 @@ dependencies {
 
     implementation(libs.retrofit.core)
     implementation(libs.retrofit.converter.gson)
-    
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
